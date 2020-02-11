@@ -13,7 +13,7 @@ let config = {};
         config[letter.slice(0,1)] = {
           filename: file,
           letter: letter.slice(0,1),
-          isLower: letter.length == 2,
+          isLower: letter.length === 2,
           raw: svg,
           viewBox: {
             raw: viewBox,
