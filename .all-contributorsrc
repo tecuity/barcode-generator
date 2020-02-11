@@ -1,0 +1,25 @@
+{
+  "projectName": "barcode-generator",
+  "projectOwner": "tecuity",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "chrisjpatty",
+      "name": "Christopher Patty",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/14916515?v=4",
+      "profile": "http://www.christopherpatty.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

@@ -53,3 +53,22 @@ const barcode = generateBarcode("1234567", {raw: true, spacing: 10})
 |---------|----------------|---------|---------------------------------------------------------------------------------|
 | spacing | int \|\| float | 5       | The spacing between characters, relative to the `viewBox` of the resulting SVG. |
 | raw     | boolean        | false   | Returns the barcode as a raw SVG string rather than a base64 data-url.          |
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://www.christopherpatty.com"><img src="https://avatars1.githubusercontent.com/u/14916515?v=4" width="100px;" alt=""/><br /><sub><b>Christopher Patty</b></sub></a><br /><a href="https://github.com/tecuity/barcode-generator/commits?author=chrisjpatty" title="Code">💻</a> <a href="https://github.com/tecuity/barcode-generator/commits?author=chrisjpatty" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
