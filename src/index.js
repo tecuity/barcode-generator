@@ -20,7 +20,7 @@ export default (string = "") => {
         i === 0
           ? 0
           : characters[i - 1].x +
-            parseFloat(characterMap[char].viewBox.width, 10) +
+            parseFloat(characters[i - 1].viewBox.width, 10) +
             SPACING
     });
   });

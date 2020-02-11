@@ -5,9 +5,10 @@ let config = {};
 
 (()=>{
   fs.readdir(SVG_PATH, (err, files) => {
-      files.forEach(file => {
+      files.filter(f => f.includes('.svg')).forEach(file => {
         const svg = fs.readFileSync(`${SVG_PATH}/${file}`, 'utf8')
         const letter = file.split('.')[0];
+
         const viewBox = svg.match(/viewBox="(.*?)"/)[1];
         const viewBoxParts = viewBox.split(' ')
         config[letter.slice(0,1)] = {
