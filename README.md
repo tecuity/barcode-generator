@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/tecuity/barcode-generator/master/logo.png)
 
-# barcode-generator [![npm (scoped)](https://img.shields.io/npm/v/@tecuity/barcode-generator)](https://www.npmjs.com/package/@tecuity/barcode-generator) ![GitHub](https://img.shields.io/github/license/tecuity/barcode-generator)
+# barcode-generator [![](https://img.shields.io/npm/v/@tecuity/barcode-generator)](https://www.npmjs.com/package/@tecuity/barcode-generator) ![](https://img.shields.io/github/license/tecuity/barcode-generator) ![](https://img.shields.io/bundlephobia/minzip/@tecuity/barcode-generator)
 
 Ever needed to generate a barcode in a JS-only environment? barcode-generator
 generates SVG barcodes in a browser, NodeJS, or anywhere else Javascript can
