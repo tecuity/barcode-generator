@@ -8,7 +8,13 @@ const svgToDataURL = svg => {
   return header + encoded;
 };
 
-export default (string = "") => {
+const getDefaultOptions = opts => ({
+  spacing: opts.spacing !== undefined ? opts.spacing : SPACING,
+  raw: opts.raw === true ? true : false
+})
+
+export default (string = "", opts: {}) => {
+  const options = getDefaultOptions(opts)
   const stringMap = string.split("");
 
   let characters = [];
@@ -21,7 +27,7 @@ export default (string = "") => {
           ? 0
           : characters[i - 1].x +
             parseFloat(characters[i - 1].viewBox.width, 10) +
-            SPACING
+            options.spacing
     });
   });
 
@@ -35,9 +41,9 @@ export default (string = "") => {
     .join("");
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${characters.reduce(
-    (sum, char) => sum + parseFloat(char.viewBox.width, 10) + SPACING,
+    (sum, char) => sum + parseFloat(char.viewBox.width, 10) + options.spacing,
     0
   )} ${characters[0].viewBox.height}">${innerElements}</svg>`;
 
-  return svgToDataURL(svg);
+  return options.raw ? svg : svgToDataURL(svg);
 };
