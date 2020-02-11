@@ -1,6 +1,6 @@
 {
   "name": "@tecuity/barcode-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "license": "MIT",
   "dependencies": {},
@@ -8,7 +8,7 @@
     "build": "node build.js"
   },
   "publishConfig": {
-  	"access": "public"
+    "access": "public"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
