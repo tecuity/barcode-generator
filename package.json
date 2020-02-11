@@ -5,12 +5,12 @@
   "license": "MIT",
   "dependencies": {},
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/tecuity/barcode-generator"
+    "type": "git",
+    "url": "https://github.com/tecuity/barcode-generator"
   },
   "homepage": {
-    "type" : "git",
-    "url" : "https://github.com/tecuity/barcode-generator"
+    "type": "git",
+    "url": "https://github.com/tecuity/barcode-generator"
   },
   "scripts": {
     "build": "node build.js"
@@ -24,6 +24,7 @@
     "@rollup/plugin-json": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
+    "all-contributors-cli": "^6.13.0",
     "babel-eslint": "10.x",
     "chalk": "^3.0.0",
     "eslint": "6.x",
