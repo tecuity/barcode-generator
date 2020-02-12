@@ -42,6 +42,7 @@ const Column = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 100px;
 `
 
 const Row = styled('div')`
@@ -58,6 +59,7 @@ const Row = styled('div')`
 const Title = styled("h1")`
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
+  margin-bottom: 50px;
 `;
 
 const Input = styled('input')`
@@ -65,7 +67,7 @@ const Input = styled('input')`
   background: none;
   border-radius: 5px;
   box-shadow: inset 0px 7px 15px -5px rgba(0,0,0,.2), inset 0px -7px 15px -5px rgba(255,255,255,1);
-  font-size: 50px;
+  font-size: 40px;
   width: 400px;
   height: 70px;
   padding: 10px;
