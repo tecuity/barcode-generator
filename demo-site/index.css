@@ -1,0 +1,9 @@
+*{
+  box-sizing: border-box;
+}
+body, input, textarea, button{
+  font-family: 'Montserrat', sans-serif;
+}
+body{
+  background: #efeeee;
+}

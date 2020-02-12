@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "node build.js",
-    "start-site": "parcel demo-site/index.html"
+    "start-site": "parcel demo-site/index.html --out-dir site-dist"
   },
   "publishConfig": {
     "access": "public"
