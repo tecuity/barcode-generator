@@ -13,7 +13,8 @@ const getDefaultOptions = opts => ({
   raw: opts.raw === true ? true : false
 })
 
-export default (string = "", opts: {}) => {
+export default (rawString = "", opts = {}) => {
+  const string = `*${rawString.replace(/\*/g, '')}*`
   const options = getDefaultOptions(opts)
   const stringMap = string.split("");
 
