@@ -1,14 +1,42 @@
 @font-face {
   font-family: "Digital";
   font-weight: 400;
-  src: url('./digital.ttf') format("truetype");
+  src: url("./digital.ttf") format("truetype");
 }
-*{
+* {
   box-sizing: border-box;
 }
-body, input, textarea, button{
-  font-family: 'Montserrat', sans-serif;
+body,
+input,
+textarea,
+button {
+  font-family: "Montserrat", sans-serif;
 }
-body{
+body {
   background: #d5d8d9;
+}
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
 }

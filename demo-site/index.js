@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import generateBarcode from "../dist/index.js";
 import Tape from "./Tape";
 import logo from './logo.svg'
+import GithubCorner from './GithubCorner'
 import "normalize.css";
 import "./index.css";
 
@@ -17,6 +18,7 @@ const App = () => {
 
   return (
     <Wrapper>
+      <GithubCorner/>
       <Column>
         {/* <Title>Barcode Generator</Title> */}
         <Logo src={logo} />
