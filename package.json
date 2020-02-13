@@ -15,7 +15,7 @@
   "scripts": {
     "build": "node build.js",
     "start-site": "parcel demo-site/index.html --out-dir site-dist",
-    "build-site": "parcel build demo-site/index.html --out-dir docs"
+    "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/"
   },
   "publishConfig": {
     "access": "public"
