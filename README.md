@@ -13,6 +13,10 @@ run.
 - Returns a barcode as a base64 data url, or raw SVG
 - Zero dependencies
 
+### Demo Site
+
+View a demo [here](https://tecuity.github.io/barcode-generator/)
+
 ## Installation
 
 ```bash
