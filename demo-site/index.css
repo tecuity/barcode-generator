@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Digital";
+  font-weight: 400;
+  src: url('./digital.ttf') format("truetype");
+}
 *{
   box-sizing: border-box;
 }
@@ -5,5 +10,5 @@ body, input, textarea, button{
   font-family: 'Montserrat', sans-serif;
 }
 body{
-  background: #efeeee;
+  background: #d5d8d9;
 }
