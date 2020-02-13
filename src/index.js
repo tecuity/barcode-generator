@@ -16,7 +16,7 @@ const getDefaultOptions = opts => ({
 export default (rawString = "", opts = {}) => {
   const string = `*${rawString.replace(/\*/g, '')}*`
   const options = getDefaultOptions(opts)
-  const stringMap = string.split("");
+  const stringMap = string.split("").filter(c => characterMap[c]);
 
   let characters = [];
 
