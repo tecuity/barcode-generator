@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import styled from "@emotion/styled";
 import generateBarcode from "../dist/index.js";
 import Tape from "./Tape";
+import logo from './logo.svg'
 import "normalize.css";
 import "./index.css";
 
@@ -17,7 +18,8 @@ const App = () => {
   return (
     <Wrapper>
       <Column>
-        <Title>Barcode Generator</Title>
+        {/* <Title>Barcode Generator</Title> */}
+        <Logo src={logo} />
         <PerspectiveWrapper>
           <Row>
             <Input
@@ -49,6 +51,11 @@ const Wrapper = styled("div")`
   justify-content: center;
   width: 100%;
 `;
+
+const Logo = styled('img')`
+  margin-bottom: 30px;
+  width: 260px;
+`
 
 const Column = styled("div")`
   display: flex;
