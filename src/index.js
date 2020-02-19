@@ -44,7 +44,7 @@ export default (rawString = "", opts = {}) => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${characters.reduce(
     (sum, char) => sum + parseFloat(char.viewBox.width, 10) + options.spacing,
     0
-  )} ${characters[0].viewBox.height}">${innerElements}</svg>`;
+  )} ${opts.height || characters[0].viewBox.height}">${innerElements}</svg>`;
 
   return options.raw ? svg : svgToDataURL(svg);
 };

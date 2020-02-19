@@ -53,6 +53,7 @@ const barcode = generateBarcode("1234567", {raw: true, spacing: 10})
 |---------|----------------|---------|---------------------------------------------------------------------------------|
 | spacing | int \|\| float | 5       | The spacing between characters, relative to the `viewBox` of the resulting SVG. |
 | raw     | boolean        | false   | Returns the barcode as a raw SVG string rather than a base64 data-url.          |
+| height  | int \|\| float | 172.89  | The `viewBox` height of the resulting SVG.                                      |
 
 ## Contributors ✨
 
