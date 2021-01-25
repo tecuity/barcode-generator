@@ -12,11 +12,18 @@
   "scripts": {
     "build": "node process.js && node build.js",
     "start-site": "parcel demo-site/index.html --out-dir site-dist",
-    "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/"
+    "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/",
+    "postversion": "cp -f package.json dist",
+    "release": "npx np"
   },
   "publishConfig": {
     "access": "public"
   },
+  "np": {
+		"yarn": false,
+    "contents": "dist",
+    "tests": false
+	},
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
