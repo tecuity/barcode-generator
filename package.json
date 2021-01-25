@@ -20,10 +20,10 @@
     "access": "public"
   },
   "np": {
-		"yarn": false,
+    "yarn": false,
     "contents": "dist",
     "tests": false
-	},
+  },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
