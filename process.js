@@ -1,5 +1,5 @@
 var fs = require('fs');
-const SVG_PATH = './svg';
+const SVG_PATH = './src/svg';
 
 let config = {};
 
@@ -7,14 +7,15 @@ let config = {};
   fs.readdir(SVG_PATH, (err, files) => {
       files.filter(f => f.includes('.svg')).forEach(file => {
         const svg = fs.readFileSync(`${SVG_PATH}/${file}`, 'utf8')
-        const letter = file.split('.')[0];
+        const filename = file.split('.')[0];
+        const letter = filename === "SPACE" ? ' ' : filename.slice(0,1)
 
         const viewBox = svg.match(/viewBox="(.*?)"/)[1];
         const viewBoxParts = viewBox.split(' ')
-        config[letter.slice(0,1)] = {
+        config[letter] = {
           filename: file,
-          letter: letter.slice(0,1),
-          isLower: letter.length === 2,
+          letter,
+          isLower: filename.length === 2,
           raw: svg,
           viewBox: {
             raw: viewBox,

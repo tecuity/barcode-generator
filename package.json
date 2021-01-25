@@ -10,7 +10,7 @@
   },
   "homepage": "https://tecuity.github.io/barcode-generator/",
   "scripts": {
-    "build": "node build.js",
+    "build": "node process.js && node build.js",
     "start-site": "parcel demo-site/index.html --out-dir site-dist",
     "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/"
   },
@@ -36,6 +36,7 @@
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "1.x",
     "normalize.css": "^8.0.1",
+    "parcel": "^2.0.0-beta.1",
     "parcel-bundler": "^1.12.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

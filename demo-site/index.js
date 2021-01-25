@@ -27,7 +27,7 @@ const App = () => {
             <Input
               type="text"
               value={code}
-              onChange={e => setCode(e.target.value.replace(/ /g, ""))}
+              onChange={e => setCode(e.target.value)}
               onKeyDown={e => {
                 if (e.keyCode === 13) generate();
               }}
