@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/repos/granite-ui/agent-os/product/tasks/**)"
+    ]
+  }
+}

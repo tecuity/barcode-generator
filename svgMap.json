@@ -140,7 +140,7 @@
     "innerElements": "<title>9</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"_9\" data-name=\"9\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H47.94V0h6.49Zm24,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
   },
   "*": {
-    "filename": "*.svg",
+    "filename": "STAR.svg",
     "letter": "*",
     "isLower": false,
     "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>*</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"_\" data-name=\"*\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",

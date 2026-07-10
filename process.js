@@ -8,7 +8,11 @@ let config = {};
       files.filter(f => f.includes('.svg')).forEach(file => {
         const svg = fs.readFileSync(`${SVG_PATH}/${file}`, 'utf8')
         const filename = file.split('.')[0];
-        const letter = filename === "SPACE" ? ' ' : filename.slice(0,1)
+        // SPACE and STAR are spelled-out filenames because their real Code 39
+        // characters (' ' and '*') are not valid on all filesystems (Windows
+        // forbids '*'). Map them back to the actual character here.
+        const letter =
+          filename === "SPACE" ? ' ' : filename === "STAR" ? '*' : filename.slice(0,1)
 
         const viewBox = svg.match(/viewBox="(.*?)"/)[1];
         const viewBoxParts = viewBox.split(' ')
