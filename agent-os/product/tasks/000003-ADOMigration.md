@@ -45,7 +45,10 @@ not block the migration.)
 
 **Do 000001 first.** This migration wires CI to `npm run build` and `npm run test:ci`. Both must
 exist and pass (they are created in 000001 Phase 1 and Phase 3). Running this migration against the
-current Rollup 1 build with a placeholder test would produce a red pipeline.
+current Rollup 1 build with a placeholder test would produce a red pipeline. The pipeline also runs
+`npm ci`, which **requires a committed `package-lock.json`** — the repo is Yarn-based today and only
+gains one when 000001 Task 15 standardizes on npm (removes `yarn.lock`, commits `package-lock.json`).
+Without that, `npm ci` fails with "no lockfile."
 
 **No existing CI to migrate — CI is net-new.** Unlike a repo moving off GitHub Actions, this repo
 has no pipeline today. Phase 2 creates the Azure Pipeline from scratch; there is no workflow file

@@ -27,13 +27,22 @@ single `main` field.
 - `main: dist/index.js`. **No `module`, no `exports`, no `types`, no ESM output.**
 - No `engines` field; no `.nvmrc`. The `postversion` script uses Unix `cp -f` (breaks on native
   Windows shells).
-- No real test suite — [index.test.js](../../../../index.test.js) is a one-line `console.log`.
+- No real test suite — [index.test.js](../../../../index.test.js) is a placeholder that `require`s
+  the built `dist/index` and `console.log`s the output; it asserts nothing and needs a prior build to run.
 - `devDependencies` mix the (tiny) library build toolchain with the demo-site's stack and contain a
   stale ESLint 6 / `@typescript-eslint@2` toolchain unused by any npm script.
 - Publishing is done via `np` (`npx np`), with `np.contents: "dist"` and `np.tests: false`.
-- **Prerequisite (in flight):** `src/svg/*.svg` was renamed to `src/svg/STAR.svg` because the `*`
-  character is illegal on Windows/NTFS and made the repo impossible to `git clone` on Windows. See
-  Task 1.
+- The repo uses **Yarn** today — a `yarn.lock` (~408 KB) is committed and there is **no
+  `package-lock.json`**. `np`'s historical `yarn: false` flag was removed (commit `595e758`), so `np`
+  currently releases through Yarn. Phase 4 standardizes the repo on npm (Task 15).
+- devDependencies also include `all-contributors-cli` (README contributor-list tool) and
+  `normalize.css` (imported by the demo-site) — neither is part of the library build/test/publish
+  toolchain.
+- **Prerequisite — DONE (commit `80d6436`).** `src/svg/*.svg` was renamed to `src/svg/STAR.svg` (the
+  `*` character is illegal on Windows/NTFS and made the repo impossible to `git clone` on Windows).
+  The rename, the `process.js` `STAR` → `*` special-casing, and the regenerated `svgMap.json` files
+  all landed in that commit; a fresh `git clone` now checks out cleanly on Windows and no tracked
+  path contains `*`. Tracked as Task 1 (marked done below) for the record.
 
 ## Acceptance Criteria
 
@@ -57,12 +66,27 @@ single `main` field.
    remaining library `devDependencies` are on supported majors.
 9. A new version (proposed `1.3.0`) is published to npm from a Node 24 environment, verified with
    `npm view @tecuity/barcode-generator` and a clean install in the React 19 sandbox.
+10. The repo is standardized on **npm**: a `package-lock.json` is generated and committed, `yarn.lock`
+    is removed, and `npm ci` installs cleanly on Node 24 (so `np` and 000003's CI both use npm).
 
 ## Developer Notes
 
 **The library has zero runtime dependencies — keep it that way.** No task below should add a
 runtime `dependencies` entry. React must never become a dependency or peerDependency of the
 published package.
+
+**Package manager: standardize on npm.** The repo is Yarn-based today (committed `yarn.lock`, no
+`package-lock.json`), but every task here uses `npm`. Task 15 removes `yarn.lock` and commits a
+`package-lock.json` — the first `npm install` in Phase 1 already generates the lockfile as a side
+effect. This is a deliberate decision (over keeping Yarn) so the ADO pipeline in 000003 can rely on
+`npm ci`.
+
+**Assumptions to verify at implementation time (not yet confirmed in-repo).** These are researched
+from upstream docs but cannot be validated until the upgrade installs the new versions — everything
+else in "Starting state" and these notes was verified against the working tree at commit `80d6436`:
+- The `@rollup/plugin-babel@6` / `@rollup/plugin-json@6` default-vs-namespace export shapes under
+  `require()` — Task 5's CJS-interop gotcha. Verify each import is actually callable after install.
+- Node 24 compatibility of Rollup 4, `@babel/*@7` latest, and `np@10` (Tasks 4, 14).
 
 **The `svgMap` build has a latent bug — fix it during modernization.** `process.js` writes its
 generated map to `./svgMap.json` (repo root), but [src/index.js](../../../../src/index.js) imports
@@ -97,7 +121,7 @@ additive and backward-compatible — publish `1.3.0`, not a major. If a later de
 (there were no tests). After Phase 3, set `np` to run `test:ci` so releases are gated on a green
 suite.
 
-**Release runs from `master`, on Node 24, authenticated.** The publish (Task 17) is intentionally
+**Release runs from `master`, on Node 24, authenticated.** The publish (Task 18) is intentionally
 last. It assumes: this preparation branch has been merged to `master` and the release is cut from
 `master`; the active Node is `24` (managed via `nvm use 24`); and `npm` has been authenticated with
 `@tecuity` publish rights (an OTP prompt is expected). These are environment preconditions, not code
@@ -113,26 +137,27 @@ is not a surprise.
 
 # Phase 0 — Repo hygiene and Node 24 baseline
 
-## Task 1: [ ] Land the `src/svg/*.svg` → `src/svg/STAR.svg` rename
+## Task 1: [x] Land the `src/svg/*.svg` → `src/svg/STAR.svg` rename — **DONE (commit `80d6436`)**
 
 **Task:** The Code 39 start/stop guard character `*` had its glyph stored in a file literally named
 `*.svg`. `*` is a reserved character on Windows/NTFS, so `git clone` / `git checkout` aborted the
-**entire** working-tree checkout on Windows (`error: invalid path 'src/svg/*.svg'`), making the
-repo unusable for any Windows developer and unbuildable in a Windows publish environment. Rename the
-file to `STAR.svg` (mirroring the existing `SPACE.svg` convention for the space character) and teach
-the build to map it back to the `*` map key.
+**entire** working-tree checkout on Windows (`error: invalid path 'src/svg/*.svg'`), making the repo
+unusable for any Windows developer and unbuildable in a Windows publish environment. The file was
+renamed to `STAR.svg` (mirroring the existing `SPACE.svg` convention) and the build taught to map it
+back to the `*` map key.
 
-This change has already been prepared in the working tree and staged (awaiting a manual commit):
-- `src/svg/*.svg` → `src/svg/STAR.svg` (100% content-identical rename).
-- `process.js` — the `letter` derivation now special-cases `STAR` → `'*'` alongside the existing
-  `SPACE` → `' '`.
-- `svgMap.json` and `src/svgMap.json` — the `*` entry's `"filename"` field updated `*.svg` →
-  `STAR.svg` (the `*` map key and glyph data are unchanged, so barcode output is identical).
+**Status: complete** — verified against the current tree (commit `80d6436`, "Research Upgrades and
+fix Windows file compatibility"):
+- `src/svg/*.svg` → `src/svg/STAR.svg` (content-identical rename; `git show` records it as
+  `src/svg/{*.svg => STAR.svg}`).
+- [process.js](../../../../process.js) special-cases `STAR` → `'*'` alongside `SPACE` → `' '`.
+- Both `svgMap.json` and `src/svgMap.json` have the `*` entry's `"filename"` updated to `STAR.svg`.
+- A tree scan confirms **no tracked path contains a Windows-illegal character** (`< > : " | ? *`);
+  `src/svg/*.svg` was the only offender and it is gone. Git status is clean — nothing is pending.
 
-Confirm no other tracked path contains a Windows-illegal character (`< > : " | ? *`) — a tree scan
-confirmed `src/svg/*.svg` was the only one. (Note: `src/svg/.DS_Store` is tracked but harmless —
-`process.js` filters it out via the `.includes('.svg')` guard. Optionally `git rm --cached` it and
-add it to `.gitignore` as a hygiene aside.)
+**Remaining hygiene aside (optional, not required for AC 2):** `src/svg/.DS_Store` is still tracked
+but harmless — `process.js` filters it via the `.includes('.svg')` guard. Optionally
+`git rm --cached src/svg/.DS_Store` and add it to `.gitignore`.
 
 **Files:**
 - `src/svg/STAR.svg` *(renamed from `src/svg/*.svg`)*
@@ -142,6 +167,8 @@ add it to `.gitignore` as a hygiene aside.)
 **Acceptance Criteria:** AC 2
 
 **History:**
+- Completed in commit `80d6436` (verified 2026-07-10): rename + `process.js` special-casing + both
+  `svgMap.json` files updated. AC 2 satisfied — a fresh `git clone` checks out cleanly on Windows.
 
 ---
 
@@ -383,7 +410,7 @@ format. Keep `main` pointing at the CJS build for backward compatibility.
 **Important — paths are relative to the publish root.** `np` publishes from `dist/` (`np.contents:
 "dist"`) and `postversion` copies `package.json` into `dist/`. So these paths must be correct **as
 seen from inside `dist/`** (hence `index.cjs`, not `dist/index.cjs`). Verify against the actual
-publish tarball in Task 16. `sideEffects: false` is safe — the module only defines and exports a
+publish tarball in Task 17. `sideEffects: false` is safe — the module only defines and exports a
 pure function.
 
 **Files:**
@@ -528,7 +555,7 @@ Remove `"tests": false`. Confirm `npx np --preview` reports that it will run `te
 
 ---
 
-# Phase 4 — Prune library devDependencies
+# Phase 4 — Prune library devDependencies and standardize on npm
 
 ## Task 13: [ ] Remove stale library-toolchain devDependencies
 
@@ -551,6 +578,11 @@ Keep: `@babel/core`, `@babel/preset-env`, `rollup@4`, `@rollup/plugin-babel`, `@
 `chalk` (or drop per Task 4), `vitest`, `np`, `shx` (if chosen in Task 3). Do a dependency-usage pass
 (`git grep` each package name across `src/`, `*.js` config) before removing, and record what was
 confirmed unused in History.
+
+**Out of scope — leave in place:** `all-contributors-cli` (maintains the README contributor list;
+referenced in `README.md`, not part of the build/test/publish toolchain) and `normalize.css`
+(imported by the demo-site at `demo-site/index.js` — a demo-site concern owned by 000002). Neither
+is a library-toolchain dependency; do not remove them here.
 
 **Files:**
 - `package.json`, `package-lock.json`
@@ -580,9 +612,36 @@ Confirm `npx np --version` prints `10.x`. (Matches the version used by the grani
 
 ---
 
+## Task 15: [ ] Standardize on npm (remove `yarn.lock`, commit `package-lock.json`)
+
+**Task:** The repo is Yarn-based today — a committed `yarn.lock` (~408 KB) and **no
+`package-lock.json`**. Every task in this plan (and 000003's CI, which runs `npm ci`) assumes npm.
+Finalize the switch to npm.
+
+The first `npm install` in Phase 1 (Task 4) already generates a `package-lock.json` (npm ignores
+`yarn.lock`). This task finalizes and commits the change:
+
+1. Confirm the lockfile is current: `npm install` on Node 24.
+2. `git rm yarn.lock`.
+3. Commit `package-lock.json` and the `yarn.lock` deletion.
+4. Confirm `np` uses npm: with no `yarn.lock` present it auto-detects npm (the historical
+   `np.yarn: false` flag was already removed in commit `595e758`, so nothing else is needed).
+5. Confirm `npm ci` installs cleanly from the committed lockfile on Node 24 — this is what 000003's
+   pipeline runs.
+
+**Files:**
+- `package-lock.json` *(new, committed)*
+- `yarn.lock` *(deleted)*
+
+**Acceptance Criteria:** AC 10
+
+**History:**
+
+---
+
 # Phase 5 — Final verification and publish
 
-## Task 15: [ ] Clean install and build on Node 24
+## Task 16: [ ] Clean install and build on Node 24
 
 **Task:** From a Node 24 environment (`node -v` → `v24.x`, matching `.nvmrc`; `nvm use 24` if
 needed), verify a clean build:
@@ -606,7 +665,7 @@ build/test run with no errors or warnings.
 
 ---
 
-## Task 16: [ ] Inspect the publish tarball
+## Task 17: [ ] Inspect the publish tarball
 
 **Task:** Confirm the package that will actually be published is correct **before** publishing.
 Because `np` publishes from `dist/` with a copied `package.json`, verify the paths resolve from the
@@ -625,7 +684,7 @@ path mismatch back in Task 8.
 
 ---
 
-## Task 17: [ ] Publish 1.3.0
+## Task 18: [ ] Publish 1.3.0
 
 **Task:** With everything green on Node 24, cut the release. **Preconditions:** the preparation
 branch has been merged to `master` and you are releasing from `master`; `nvm use 24` is active; and

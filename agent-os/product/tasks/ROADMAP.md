@@ -5,7 +5,7 @@
 ## Goal
 
 Take `@tecuity/barcode-generator` from its current state (v1.2.1, UMD-only Rollup 1 build, no tests,
-no CI, unbuildable on Windows) to a modern package that:
+no CI, Yarn-based) to a modern package that:
 1. Builds and publishes on **Node 24** (management mandate).
 2. Consumes cleanly in **React 19** apps via native ESM + CJS `exports`.
 3. Has a real test suite and a React-19 demo-site.
@@ -16,12 +16,13 @@ modern module output, **not** adding React as a dependency. See each task file f
 
 ---
 
-## Prerequisite (blocking everything)
+## Prerequisite — DONE ✓
 
-**`src/svg/*.svg` → `src/svg/STAR.svg` rename.** The `*` glyph filename is illegal on Windows/NTFS
-and makes the repo impossible to `git clone` on Windows. The rename is prepared in the working tree
-and awaiting a manual commit. Tracked as **000001 Task 1**. Nothing else can be built or tested on
-Windows until this lands.
+**`src/svg/*.svg` → `src/svg/STAR.svg` rename.** The `*` glyph filename was illegal on Windows/NTFS
+and made the repo impossible to `git clone` on Windows. **This has already landed in commit
+`80d6436`** — the rename, the `process.js` `STAR` → `*` special-casing, and the regenerated
+`svgMap.json` files are all committed; git status is clean and no tracked path contains `*`. Tracked
+as **000001 Task 1** (marked done). This no longer blocks anything.
 
 ---
 
@@ -36,11 +37,11 @@ Root/package changes. The foundation for everything else.
 
 | Phase | Description | Status |
 |-------|-------------|--------|
-| 0 | Repo hygiene: STAR.svg rename, `.nvmrc` + `engines: >=24`, cross-platform `postversion` | |
+| 0 | Repo hygiene: STAR.svg rename (✓ done, commit `80d6436`), `.nvmrc` + `engines: >=24`, cross-platform `postversion` | |
 | 1 | Rollup 1 → 4 toolchain (mind the `@rollup/plugin-*` v6 CJS `default`-export interop); dual ESM + CJS + UMD output; fix the `svgMap.json` generation bug; remove the shared root `.babelrc` (inline the library's Babel config into Rollup) | |
 | 2 | `exports`/`module`/`types` map; hand-written `index.d.ts`; verify import in a React 19 sandbox | |
 | 3 | Vitest suite replacing the placeholder `index.test.js`; gate `np` on `test:ci` | |
-| 4 | Prune stale library devDependencies; bump `np` to v10 | |
+| 4 | Prune stale library devDependencies; bump `np` to v10; **standardize on npm** (remove `yarn.lock`, commit `package-lock.json`) | |
 | 5 | Clean Node 24 build, inspect the publish tarball, publish **1.3.0** | |
 
 ### 000002 — [Demo-Site React 19 Upgrade](./000002-DemoSiteReact19Upgrade.md)
@@ -78,9 +79,16 @@ this repo has no pipeline today.
 (not just a toolchain floor) — this applies to downstream consumers too. Decide whether to add
 `engine-strict=true` so installs hard-fail rather than warn.
 
-**Two committed `svgMap.json` files, one of them stale.** `process.js` writes the root copy but the
-build imports `src/svgMap.json`. 000001 Task 6 consolidates to a single reproducible map. Don't
-hand-edit either map before that task — regenerate from the SVGs.
+**Two committed `svgMap.json` files with a write/read path split.** `process.js` writes the root
+copy (`svgMap.json`) but the build imports `src/svgMap.json`, so the build always bundles the `src/`
+copy and ignores the freshly generated root one. The two files are **currently byte-identical**
+(56741 bytes each — confirmed 2026-07-10), so the bug is latent, but any regeneration would diverge
+them. 000001 Task 6 consolidates to a single reproducible map. Don't hand-edit either map before that
+task — regenerate from the SVGs.
+
+**Package manager: standardizing on npm.** The repo is Yarn-based today (committed `yarn.lock`, no
+`package-lock.json`; `np` releases via Yarn). 000001 Task 15 removes `yarn.lock` and commits a
+`package-lock.json` so `np` and 000003's `npm ci` pipeline both use npm. Chosen over keeping Yarn.
 
 **Version strategy.** 000001 publishes `1.3.0` (additive: ESM/`exports` added, `main` preserved). Do
 **not** drop the UMD `main` in this cycle — that would be a breaking `2.0.0`.

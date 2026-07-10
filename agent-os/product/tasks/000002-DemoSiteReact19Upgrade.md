@@ -81,6 +81,22 @@ repo uses `styled` (which works without extra config) and `css`/`keyframes` in `
 visibly breaks, and keep any such config scoped to the demo-site so it does not affect the library's
 Rollup build (and does not reintroduce a root `.babelrc`).
 
+**Package manager: npm** (per 000001's decision — the repo standardizes on npm; the commands below
+use `npm`). The `Files` lists reference `package-lock.json`; note the demo-site shares the single
+repo-root `package.json`/lockfile with the library.
+
+**Assumptions to verify at implementation time (researched from upstream docs, not yet confirmed in
+this repo).** The verified starting-state facts below — React 16 `ReactDOM.render` at
+[demo-site/index.js:184](../../../../demo-site/index.js#L184), `e.keyCode === 13` at
+[demo-site/index.js:32](../../../../demo-site/index.js#L32), `@emotion/core` at
+[demo-site/Tape.js:3](../../../../demo-site/Tape.js#L3), and the Parcel-1 `--out-dir` flags — were
+confirmed against the working tree. These, however, depend on versions not yet installed here:
+- `@emotion/react@11.14.0` / `@emotion/styled@11.14.1` peer `react: ">=16.8.0"` satisfying React 19,
+  and the React-19 ref-forwarding fix shipping in 11.14+ (Task 1).
+- Parcel 2 ignoring a bare `preset-env`-only `.babelrc` but honoring one with custom options, and its
+  SWC JSX transform working without `@babel/preset-react` (Developer Notes above; 000001 Task 7).
+- Parcel 2 CLI flags (`--dist-dir`, `--public-url`) on the exact installed version (Task 4).
+
 ---
 
 ## Task 1: [ ] Bump demo-site React, Emotion, and Parcel versions
