@@ -1,7 +1,24 @@
 {
   "name": "@tecuity/barcode-generator",
   "version": "1.2.1",
-  "main": "dist/index.js",
+  "main": "index.cjs",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs",
+      "default": "./index.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.umd.js",
+    "index.d.ts"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,16 +32,22 @@
     "build": "node process.js && node build.js",
     "start-site": "parcel demo-site/index.html --out-dir site-dist",
     "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/",
+    "pretest": "node process.js",
+    "test": "vitest run",
+    "pretest:ci": "node process.js",
+    "test:ci": "vitest run",
     "copy-manifest": "node -e \"require('node:fs').copyFileSync('package.json','dist/package.json')\"",
     "postversion": "npm run build && npm run copy-manifest",
-    "release": "npx np"
+    "pack:preview": "npm run build && npm run copy-manifest && npm pack ./dist --dry-run",
+    "release:preview": "np --preview",
+    "release": "np"
   },
   "publishConfig": {
     "access": "public"
   },
   "np": {
     "contents": "dist",
-    "tests": false
+    "testScript": "test:ci"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

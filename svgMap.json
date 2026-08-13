@@ -139,20 +139,6 @@
     },
     "innerElements": "<title>9</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"_9\" data-name=\"9\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H47.94V0h6.49Zm24,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
   },
-  "*": {
-    "filename": "STAR.svg",
-    "letter": "*",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>*</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"_\" data-name=\"*\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>*</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"_\" data-name=\"*\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
   "-": {
     "filename": "-.svg",
     "letter": "-",
@@ -181,370 +167,6 @@
     },
     "innerElements": "<title>A</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"A\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
   },
-  "B": {
-    "filename": "B.svg",
-    "letter": "B",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>B</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"B\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>B</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"B\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "C": {
-    "filename": "C.svg",
-    "letter": "C",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>C</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"C\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>C</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"C\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "D": {
-    "filename": "D.svg",
-    "letter": "D",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>D</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"D\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm24,0H26V0H43.44Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>D</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"D\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm24,0H26V0H43.44Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "E": {
-    "filename": "E.svg",
-    "letter": "E",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>E</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"E\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>E</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"E\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "F": {
-    "filename": "F.svg",
-    "letter": "F",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>F</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"F\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>F</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"F\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "G": {
-    "filename": "G.svg",
-    "letter": "G",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>G</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"G\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm13,0H26V0h6.49Zm34.95,0H49.94V0H67.41Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>G</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"G\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm13,0H26V0h6.49Zm34.95,0H49.94V0H67.41Zm24,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "H": {
-    "filename": "H.svg",
-    "letter": "H",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>H</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"H\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>H</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"H\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "I": {
-    "filename": "I.svg",
-    "letter": "I",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>I</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"I\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>I</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"I\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "J": {
-    "filename": "J.svg",
-    "letter": "J",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>J</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"J\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>J</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"J\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "K": {
-    "filename": "K.svg",
-    "letter": "K",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>K</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"K\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>K</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"K\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "L": {
-    "filename": "L.svg",
-    "letter": "L",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>L</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"L\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>L</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"L\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "M": {
-    "filename": "M.svg",
-    "letter": "M",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>M</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"M\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>M</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"M\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "N": {
-    "filename": "N.svg",
-    "letter": "N",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>N</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"N\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>N</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"N\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "O": {
-    "filename": "O.svg",
-    "letter": "O",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>O</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"O\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>O</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"O\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "P": {
-    "filename": "P.svg",
-    "letter": "P",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>P</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"P\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>P</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"P\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "Q": {
-    "filename": "Q.svg",
-    "letter": "Q",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>Q</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Q\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm13,0H26V0h6.49Zm24,0H39V0H56.43Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>Q</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Q\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm13,0H26V0h6.49Zm24,0H39V0H56.43Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "R": {
-    "filename": "R.svg",
-    "letter": "R",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>R</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"R\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>R</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"R\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "S": {
-    "filename": "S.svg",
-    "letter": "S",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>S</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"S\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>S</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"S\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  " ": {
-    "filename": "SPACE.svg",
-    "letter": " ",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 82.41 172.93\"><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path d=\"M5.85,172.93V0H0V172.93Zm76.56,0V0H76.56V172.93Zm-45,0V0H21.62V172.93Zm33.32,0V0H54.94V172.93Zm-21.61,0V0H43.23V172.93Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 82.41 172.93",
-      "minX": "0",
-      "miny": "0",
-      "width": "82.41",
-      "height": "172.93"
-    },
-    "innerElements": "<g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path d=\"M5.85,172.93V0H0V172.93Zm76.56,0V0H76.56V172.93Zm-45,0V0H21.62V172.93Zm33.32,0V0H54.94V172.93Zm-21.61,0V0H43.23V172.93Z\"/></g></g>"
-  },
-  "T": {
-    "filename": "T.svg",
-    "letter": "T",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>T</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"T\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>T</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"T\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "U": {
-    "filename": "U.svg",
-    "letter": "U",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>U</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"U\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>U</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"U\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "V": {
-    "filename": "V.svg",
-    "letter": "V",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>V</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"V\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>V</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"V\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "W": {
-    "filename": "W.svg",
-    "letter": "W",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>W</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"W\" d=\"M17.48,172.89H0V0H17.48Zm35,0H35V0H52.43Zm13,0h-6.5V0h6.5Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>W</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"W\" d=\"M17.48,172.89H0V0H17.48Zm35,0H35V0H52.43Zm13,0h-6.5V0h6.5Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "X": {
-    "filename": "X.svg",
-    "letter": "X",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>X</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"X\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>X</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"X\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
-  },
-  "Y": {
-    "filename": "Y.svg",
-    "letter": "Y",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>Y</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Y\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>Y</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Y\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
-  "Z": {
-    "filename": "Z.svg",
-    "letter": "Z",
-    "isLower": false,
-    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>Z</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Z\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
-    "viewBox": {
-      "raw": "0 0 91.38 172.89",
-      "minX": "0",
-      "miny": "0",
-      "width": "91.38",
-      "height": "172.89"
-    },
-    "innerElements": "<title>Z</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Z\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
-  },
   "a": {
     "filename": "al.svg",
     "letter": "a",
@@ -558,6 +180,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>al</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"al\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.88V0h17.47Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm24,0H158.8V0h6.49Zm24,0H171.78V0h17.48Z\"/></g></g>"
+  },
+  "B": {
+    "filename": "B.svg",
+    "letter": "B",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>B</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"B\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>B</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"B\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
   },
   "b": {
     "filename": "bl.svg",
@@ -573,6 +209,20 @@
     },
     "innerElements": "<title>bl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"bl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0H97.88V0h6.49Zm24,0H110.86V0h17.48Zm13,0h-6.49V0h6.49Zm24,0H158.8V0h6.49Zm24,0H171.78V0h17.48Z\"/></g></g>"
   },
+  "C": {
+    "filename": "C.svg",
+    "letter": "C",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>C</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"C\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>C</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"C\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "c": {
     "filename": "cl.svg",
     "letter": "c",
@@ -586,6 +236,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>cl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"cl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.88V0h17.47Zm24,0H121.84V0h17.48Zm13,0h-6.5V0h6.5Zm24,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  "D": {
+    "filename": "D.svg",
+    "letter": "D",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>D</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"D\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm24,0H26V0H43.44Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>D</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"D\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm24,0H26V0H43.44Zm24,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
   },
   "d": {
     "filename": "dl.svg",
@@ -601,6 +265,20 @@
     },
     "innerElements": "<title>dl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"dl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0H97.88V0h6.49Zm13,0h-6.49V0h6.49Zm24,0H123.84V0h17.48Zm24,0H158.8V0h6.49Zm24,0H171.78V0h17.48Z\"/></g></g>"
   },
+  "E": {
+    "filename": "E.svg",
+    "letter": "E",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>E</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"E\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>E</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"E\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "e": {
     "filename": "el.svg",
     "letter": "e",
@@ -614,6 +292,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>el</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"el\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm13,0h-6.5V0h6.5Zm24,0H134.83V0h17.48Zm24,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  "F": {
+    "filename": "F.svg",
+    "letter": "F",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>F</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"F\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>F</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"F\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm24,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
   },
   "f": {
     "filename": "fl.svg",
@@ -629,6 +321,20 @@
     },
     "innerElements": "<title>fl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"fl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm24,0H110.86V0h17.48Zm24,0H134.83V0h17.48Zm24,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Z\"/></g></g>"
   },
+  "G": {
+    "filename": "G.svg",
+    "letter": "G",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>G</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"G\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm13,0H26V0h6.49Zm34.95,0H49.94V0H67.41Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>G</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"G\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.5Zm13,0H26V0h6.49Zm34.95,0H49.94V0H67.41Zm24,0H73.91V0H91.38Z\"/></g></g>"
+  },
   "g": {
     "filename": "gl.svg",
     "letter": "g",
@@ -642,6 +348,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>gl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"gl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Zm35,0H147.81V0h17.48Zm24,0H171.78V0h17.48Z\"/></g></g>"
+  },
+  "H": {
+    "filename": "H.svg",
+    "letter": "H",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>H</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"H\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>H</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"H\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
   },
   "h": {
     "filename": "hl.svg",
@@ -657,6 +377,20 @@
     },
     "innerElements": "<title>hl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"hl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm35,0H158.8V0h17.47Zm13,0h-6.49V0h6.49Z\"/></g></g>"
   },
+  "I": {
+    "filename": "I.svg",
+    "letter": "I",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>I</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"I\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>I</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"I\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "i": {
     "filename": "il.svg",
     "letter": "i",
@@ -670,6 +404,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>il</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"il\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm24,0H110.86V0h17.48Zm13,0h-6.49V0h6.49Zm35,0H158.8V0h17.47Zm13,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  "J": {
+    "filename": "J.svg",
+    "letter": "J",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>J</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"J\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>J</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"J\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm35,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
   },
   "j": {
     "filename": "jl.svg",
@@ -685,6 +433,20 @@
     },
     "innerElements": "<title>jl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"jl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm24,0H123.84V0h17.48Zm35,0H158.8V0h17.47Zm13,0h-6.49V0h6.49Z\"/></g></g>"
   },
+  "K": {
+    "filename": "K.svg",
+    "letter": "K",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>K</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"K\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>K</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"K\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
+  },
   "k": {
     "filename": "kl.svg",
     "letter": "k",
@@ -698,6 +460,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>kl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"kl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Zm35,0H171.78V0h17.48Z\"/></g></g>"
+  },
+  "L": {
+    "filename": "L.svg",
+    "letter": "L",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>L</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"L\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>L</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"L\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
   },
   "l": {
     "filename": "ll.svg",
@@ -713,6 +489,20 @@
     },
     "innerElements": "<title>ll</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"ll\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm24,0H110.86V0h17.48Zm13,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Zm35,0H171.78V0h17.48Z\"/></g></g>"
   },
+  "M": {
+    "filename": "M.svg",
+    "letter": "M",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>M</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"M\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>M</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"M\" d=\"M17.48,172.89H0V0H17.48Zm24,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "m": {
     "filename": "ml.svg",
     "letter": "m",
@@ -726,6 +516,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>ml</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"ml\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm24,0H121.84V0h17.48Zm13,0h-6.5V0h6.5Zm13,0H158.8V0h6.49Zm24,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  "N": {
+    "filename": "N.svg",
+    "letter": "N",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>N</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"N\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>N</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"N\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm13,0H49.94V0h6.49Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
   },
   "n": {
     "filename": "nl.svg",
@@ -741,6 +545,20 @@
     },
     "innerElements": "<title>nl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"nl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm24,0H123.84V0h17.48Zm13,0h-6.49V0h6.49Zm35,0H171.78V0h17.48Z\"/></g></g>"
   },
+  "O": {
+    "filename": "O.svg",
+    "letter": "O",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>O</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"O\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>O</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"O\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "o": {
     "filename": "ol.svg",
     "letter": "o",
@@ -754,6 +572,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>ol</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"ol\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm13,0h-6.5V0h6.5Zm24,0H134.83V0h17.48Zm13,0H158.8V0h6.49Zm24,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  "P": {
+    "filename": "P.svg",
+    "letter": "P",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>P</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"P\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>P</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"P\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H84.89V0h6.49Z\"/></g></g>"
   },
   "p": {
     "filename": "pl.svg",
@@ -769,6 +601,20 @@
     },
     "innerElements": "<title>pl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"pl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm24,0H110.86V0h17.48Zm24,0H134.83V0h17.48Zm13,0H158.8V0h6.49Zm24,0h-6.49V0h6.49Z\"/></g></g>"
   },
+  "Q": {
+    "filename": "Q.svg",
+    "letter": "Q",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>Q</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Q\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm13,0H26V0h6.49Zm24,0H39V0H56.43Zm34.95,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>Q</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Q\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm13,0H26V0h6.49Zm24,0H39V0H56.43Zm34.95,0H73.91V0H91.38Z\"/></g></g>"
+  },
   "q": {
     "filename": "ql.svg",
     "letter": "q",
@@ -782,6 +628,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>ql</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"ql\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Zm24,0H136.83V0H154.3Zm35,0H171.78V0h17.48Z\"/></g></g>"
+  },
+  "R": {
+    "filename": "R.svg",
+    "letter": "R",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>R</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"R\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>R</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"R\" d=\"M17.48,172.89H0V0H17.48Zm13,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g>"
   },
   "r": {
     "filename": "rl.svg",
@@ -797,6 +657,20 @@
     },
     "innerElements": "<title>rl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"rl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm24,0H147.81V0h17.48Zm24,0h-6.49V0h6.49Z\"/></g></g>"
   },
+  "S": {
+    "filename": "S.svg",
+    "letter": "S",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>S</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"S\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>S</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"S\" d=\"M6.49,172.89H0V0H6.49Zm24,0H13V0H30.46Zm13,0H37V0h6.49Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "s": {
     "filename": "sl.svg",
     "letter": "s",
@@ -810,6 +684,48 @@
       "height": "172.89"
     },
     "innerElements": "<title>sl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"sl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm24,0H110.86V0h17.48Zm13,0h-6.49V0h6.49Zm24,0H147.81V0h17.48Zm24,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  " ": {
+    "filename": "SPACE.svg",
+    "letter": " ",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 82.41 172.93\"><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path d=\"M5.85,172.93V0H0V172.93Zm76.56,0V0H76.56V172.93Zm-45,0V0H21.62V172.93Zm33.32,0V0H54.94V172.93Zm-21.61,0V0H43.23V172.93Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 82.41 172.93",
+      "minX": "0",
+      "miny": "0",
+      "width": "82.41",
+      "height": "172.93"
+    },
+    "innerElements": "<g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path d=\"M5.85,172.93V0H0V172.93Zm76.56,0V0H76.56V172.93Zm-45,0V0H21.62V172.93Zm33.32,0V0H54.94V172.93Zm-21.61,0V0H43.23V172.93Z\"/></g></g>"
+  },
+  "*": {
+    "filename": "STAR.svg",
+    "letter": "*",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>*</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"_\" data-name=\"*\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>*</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"_\" data-name=\"*\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm24,0H60.92V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
+  },
+  "T": {
+    "filename": "T.svg",
+    "letter": "T",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>T</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"T\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>T</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"T\" d=\"M6.49,172.89H0V0H6.49Zm13,0H13V0h6.49Zm24,0H26V0H43.44Zm24,0H49.94V0H67.41Zm24,0H84.89V0h6.49Z\"/></g></g>"
   },
   "t": {
     "filename": "tl.svg",
@@ -825,6 +741,20 @@
     },
     "innerElements": "<title>tl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"tl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm13,0h-6.49V0h6.49Zm24,0H123.84V0h17.48Zm24,0H147.81V0h17.48Zm24,0h-6.49V0h6.49Z\"/></g></g>"
   },
+  "U": {
+    "filename": "U.svg",
+    "letter": "U",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>U</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"U\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>U</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"U\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
+  },
   "u": {
     "filename": "ul.svg",
     "letter": "u",
@@ -838,6 +768,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>ul</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"ul\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm24,0h-6.49V0h6.49Zm13,0h-6.5V0h6.5Zm13,0H158.8V0h6.49Zm24,0H171.78V0h17.48Z\"/></g></g>"
+  },
+  "V": {
+    "filename": "V.svg",
+    "letter": "V",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>V</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"V\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>V</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"V\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm13,0H47.94V0h6.49Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
   },
   "v": {
     "filename": "vl.svg",
@@ -853,6 +797,20 @@
     },
     "innerElements": "<title>vl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"vl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm34.95,0H121.84V0h17.48Zm13,0h-6.5V0h6.5Zm13,0H158.8V0h6.49Zm24,0H171.78V0h17.48Z\"/></g></g>"
   },
+  "W": {
+    "filename": "W.svg",
+    "letter": "W",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>W</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"W\" d=\"M17.48,172.89H0V0H17.48Zm35,0H35V0H52.43Zm13,0h-6.5V0h6.5Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>W</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"W\" d=\"M17.48,172.89H0V0H17.48Zm35,0H35V0H52.43Zm13,0h-6.5V0h6.5Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "w": {
     "filename": "wl.svg",
     "letter": "w",
@@ -866,6 +824,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>wl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"wl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm35,0H132.83V0h17.48Zm13,0H156.8V0h6.49Zm13,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  "X": {
+    "filename": "X.svg",
+    "letter": "X",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>X</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"X\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>X</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"X\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm24,0H37V0H54.43Zm13,0H60.92V0h6.49Zm24,0H73.91V0H91.38Z\"/></g></g>"
   },
   "x": {
     "filename": "xl.svg",
@@ -881,6 +853,20 @@
     },
     "innerElements": "<title>xl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"xl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm13,0h-6.5V0h6.5Zm24,0h-6.5V0h6.5Zm24,0H134.83V0h17.48Zm13,0H158.8V0h6.49Zm24,0H171.78V0h17.48Z\"/></g></g>"
   },
+  "Y": {
+    "filename": "Y.svg",
+    "letter": "Y",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>Y</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Y\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>Y</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Y\" d=\"M17.48,172.89H0V0H17.48Zm24,0H35V0h6.49Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
+  },
   "y": {
     "filename": "yl.svg",
     "letter": "y",
@@ -894,6 +880,20 @@
       "height": "172.89"
     },
     "innerElements": "<title>yl</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"yl\" d=\"M6.49,172.89H0V0H6.49Zm24,0H24V0h6.49Zm13,0H37V0h6.49Zm24,0H60.92V0h6.49Zm24,0H84.89V0h6.49Zm24,0H97.87V0h17.48Zm24,0h-6.49V0h6.49Zm24,0H145.81V0h17.48Zm13,0h-6.49V0h6.49Zm13,0h-6.49V0h6.49Z\"/></g></g>"
+  },
+  "Z": {
+    "filename": "Z.svg",
+    "letter": "Z",
+    "isLower": false,
+    "raw": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.38 172.89\"><title>Z</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Z\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g></svg>",
+    "viewBox": {
+      "raw": "0 0 91.38 172.89",
+      "minX": "0",
+      "miny": "0",
+      "width": "91.38",
+      "height": "172.89"
+    },
+    "innerElements": "<title>Z</title><g id=\"Layer_2\" data-name=\"Layer 2\"><g id=\"Layer_1-2\" data-name=\"Layer 1\"><path id=\"Z\" d=\"M6.49,172.89H0V0H6.49Zm35,0H24V0H41.45Zm24,0H47.94V0H65.42Zm13,0H71.91V0H78.4Zm13,0H84.89V0h6.49Z\"/></g></g>"
   },
   "z": {
     "filename": "zl.svg",

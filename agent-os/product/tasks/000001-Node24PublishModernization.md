@@ -404,7 +404,7 @@ If the build fails during a release, the version commit has already been made �
 
 # Phase 1 — Build toolchain upgrade (Rollup 1 → 4)
 
-## Task 4: [ ] Upgrade Rollup and Babel plugins
+## Task 4: [x] Upgrade Rollup and Babel plugins
 
 **Task:** Rollup 1.31 is years out of support and has Node 24 incompatibilities. Upgrade to Rollup 4
 and swap the deprecated `rollup-plugin-babel` for the maintained scoped package.
@@ -445,6 +445,16 @@ Notes:
 **Acceptance Criteria:** AC 3
 
 **History:**
+- 2026-08-13 — **Code half completed, task closed.** The `chalk` → `util.styleText` swap this task
+  specifies landed as part of Task 5's `build.js` rewrite: the file now opens with
+  `const { styleText } = require("node:util")` and prints
+  `styleText("green", "Starting build...")`, with no `require("chalk")` and no
+  `require("rollup-plugin-babel")` anywhere. Verified end to end — a repo-wide grep (excluding
+  `node_modules/` and `package-lock.json`) finds **zero** references to either package in any source or
+  config file, and `npm run build` exits 0 on Node v24.16.0 printing the coloured status lines. The red
+  window called out in the entry below is closed. Neither `chalk@3` nor the ESM-only `chalk@6` was
+  reinstated, and no dependency was added for the colour output. Closed at Braden's direction on
+  2026-08-13 once Task 5 landed, since nothing in this task remained open.
 - 2026-08-13 — **Install half completed** as part of the ROADMAP Step 2 batch (one dependency
   transaction covering Tasks 4, 11, 13, 14, 15). Installed `rollup@4.62.4`,
   `@rollup/plugin-babel@7.1.0` and `@rollup/plugin-json@6.1.0`; removed `rollup-plugin-babel` and
@@ -468,7 +478,7 @@ Notes:
 
 ---
 
-## Task 5: [ ] Rewrite the build for Rollup 4 and dual ESM + CJS output
+## Task 5: [x] Rewrite the build for Rollup 4 and dual ESM + CJS output
 
 **Task:** Update `build.js` for Rollup 4's API and emit **two** builds — ESM and CJS — plus keep a
 UMD build for backward compatibility. The current script uses `output.dir` with `name: "index.js"`
@@ -557,6 +567,22 @@ Details that matter, none of them optional:
 **Acceptance Criteria:** AC 3, AC 4
 
 **History:**
+- 2026-08-13 — Completed. Replaced [build.js](../../../../build.js) with the specified CommonJS script
+  verbatim — one `rollup.rollup()` plus three `bundle.write()` calls (`dist/index.cjs` with
+  `exports: "default"`, `dist/index.mjs`, `dist/index.umd.js` with `name: "barcodeGenerator"`), the
+  inline Babel config from Task 7, `util.styleText` in place of `chalk`, and the
+  `fs.copyFileSync("src/index.d.ts", "dist/index.d.ts")` step from Task 9. The documented
+  `const { babel } = require("@rollup/plugin-babel")` / `const json = require("@rollup/plugin-json")`
+  import forms worked as researched — no interop workaround needed. Verified on Node v24.16.0 / npm
+  11.13.0 against a wiped `dist/`: `npm run build` exits 0, prints only "Starting build..." /
+  "Build complete.", and emits **no Rollup warnings at all** (not even `EMPTY_BUNDLE` or a
+  plugin-version notice), so AC 1 has nothing to justify in Task 16. `dist/` contains all four
+  expected files (`index.cjs` 54.3 kB, `index.mjs` 54.3 kB, `index.umd.js` 56.6 kB, `index.d.ts`
+  521 B). Confirmed `modules: false` took effect — `dist/index.mjs` contains **zero** `require(`
+  occurrences — and that the UMD wrapper carries the `barcodeGenerator` global. Built-output parity
+  against the Task 1.5 fixture passes at both levels (`cjs parity OK 16`, `mjs parity OK 16`), which
+  also proves `exports: "default"` is in effect: the CJS parity script calls the `require()` result
+  directly as a function.
 - 2026-08-11 — Research completed: resolved the "single Rollup run with an `output` array (or a
   config-array export)" and "optionally a `rollup.config.mjs`" directives. The Rollup JS API takes one
   output config per `bundle.write()`, so the task now specifies the complete imperative CommonJS
@@ -570,7 +596,7 @@ Details that matter, none of them optional:
 
 ---
 
-## Task 6: [ ] Fix the `svgMap.json` generation so the build bundles the fresh map
+## Task 6: [x] Fix the `svgMap.json` generation so the build bundles the fresh map
 
 **Task:** `process.js` writes `./svgMap.json` (repo root), but `src/index.js` imports the map
 resolved relative to `src/` (i.e. `src/svgMap.json`). The build therefore bundles a stale,
@@ -611,6 +637,21 @@ go unnoticed in the first place.
 **Acceptance Criteria:** AC 3, AC 4
 
 **History:**
+- 2026-08-13 — Completed. Changed [src/index.js:1](../../../../src/index.js#L1) to
+  `import characterMap from "../svgMap.json"`, left `process.js` untouched, and `git rm src/svgMap.json`.
+  Before deleting, re-confirmed the two committed maps were safe to consolidate: both had 65 keys, an
+  identical key set **and** identical key order, and **zero** value differences — the byte-size
+  difference between them (57,652 vs 56,741) was working-tree line endings only (`.gitattributes` sets
+  `* text=auto`, and the older `src/` copy had not been renormalized). Re-ran `node process.js`; the
+  regenerated root map has the expected **65 entries** with `*` → `STAR.svg`, `' '`, `-`, `0`–`9`,
+  `A`–`Z` and `a`–`z` all present. Against the committed `svgMap.json` the regeneration is a
+  **key-order-only** diff (355 insertions / 355 deletions, zero value differences) — exactly the
+  `fs.readdir` ordering effect the task anticipates, and semantically equal, which is the stated bar.
+  `svgMap.json` stays committed at the repo root and was **not** added to `.gitignore`. Both consumers
+  resolve the new path with no config change, as researched: Rollup bundles it (the built
+  `dist/index.mjs` is 54.3 kB, i.e. the map is inlined) and Vitest imports it through `src/index.js`
+  with no `vitest.config.js`. The regenerated map is left staged in the working tree for the
+  maintainer's commit, matching how Task 15 left its lockfile step.
 - 2026-08-11 — Research completed: resolved the "pick one and be consistent" directive. Chose to fix
   the reader (`src/index.js` → `../svgMap.json`) and keep the generated map at the repo root, so
   `src/` holds hand-written source only. Confirmed the only two `svgMap` references are
@@ -619,7 +660,7 @@ go unnoticed in the first place.
 
 ---
 
-## Task 7: [ ] Decouple the library Babel config from the demo-site (remove the shared root `.babelrc`)
+## Task 7: [x] Decouple the library Babel config from the demo-site (remove the shared root `.babelrc`)
 
 **Task:** The root `.babelrc` is `{ "presets": ["@babel/preset-env"] }` with no targets, so Babel
 transpiles to a broad default and rewrites ES modules to CJS (which breaks the ESM build). It is also
@@ -672,6 +713,19 @@ Keep `@babel/core` and `@babel/preset-env` current (`^7` latest) — bump if nee
 **Acceptance Criteria:** AC 3, AC 4
 
 **History:**
+- 2026-08-13 — Completed. `git rm .babelrc` (the root `{ "presets": ["@babel/preset-env"] }` file), and
+  the library's Babel options now live inline in [build.js](../../../../build.js) exactly as specified:
+  `babelHelpers: "bundled"`, `babelrc: false`, `configFile: false`, and
+  `presets: [["@babel/preset-env", { targets: { node: "20" }, modules: false }]]` — `targets` only, no
+  `esmodules: true`. Step 3 confirmed: a scan for Babel config files found **none anywhere in the repo**
+  — not at the root and not in `demo-site/` — so once 000002 moves the demo-site to Parcel 2 there is no
+  ancestor config for Parcel to pick up and it will use its built-in SWC transform for JSX + env, with
+  no `@babel/preset-react` needed. The chosen inline approach was used, not the rejected
+  relocate-to-`src/` fallback. `@babel/*` were **not** bumped — the 2026-08-13 finding below stands, and
+  the build output confirms it: object spread survives untranspiled and `export default` stays ESM
+  (`dist/index.mjs` has zero `require(` calls), so `@babel/preset-env@7.8.4` handles this config
+  correctly and "bump if needed for Node 24" remained *not needed*. `package.json` therefore carries no
+  `@babel/*` version change and the lockfile did not churn.
 - 2026-08-13 — Finding from the Step 2 install batch, recorded here because this task owns the
   "keep `@babel/core` and `@babel/preset-env` current (`^7` latest)" decision. Both resolved to
   **7.8.4** — the exact floor, not the newest 7.x — because npm's tree reuse kept the already-installed
@@ -692,7 +746,7 @@ Keep `@babel/core` and `@babel/preset-env` current (`^7` latest) — bump if nee
 
 # Phase 2 — Module output modernization (React 19 consumption)
 
-## Task 8: [ ] Add `exports`, `module`, `types`, `files`, and `sideEffects`
+## Task 8: [x] Add `exports`, `module`, `types`, `files`, and `sideEffects`
 
 **Task:** Wire the dual build from Phase 1 into `package.json` so modern bundlers resolve the right
 format. Keep `main` pointing at the CJS build for backward compatibility.
@@ -727,10 +781,24 @@ pure function.
 **Acceptance Criteria:** AC 4, AC 6
 
 **History:**
+- 2026-08-13 — Completed. Added `module`, `types`, `exports`, `sideEffects` and `files` to
+  `package.json` exactly as specified, and changed `main` from `dist/index.js` to `index.cjs`. All paths
+  are publish-root-relative (no `dist/` prefix), and the `exports` condition order is
+  `types` → `import` → `require` → `default`. Verified against a real tarball listing rather than by
+  inspection: `npm run pack:preview` (Task 14.5) reports exactly five entries — `index.cjs`,
+  `index.d.ts`, `index.mjs`, `index.umd.js`, `package.json` — so every path named by
+  `main`/`module`/`types`/`exports` resolves to a file that is actually present in the publish root, and
+  the `files` array excluded everything else. That is Task 17's check, satisfied early here; no path
+  mismatch to fix. Note the root `package.json` is now only correct as seen from inside `dist/` — a
+  repo-root `npm pack` would produce a tarball with none of the build output, which is why Task 10
+  step 1 packs from `dist/`.
+- Rolled the `dist/index.js` → `index.cjs` rename forward: the demo-site's
+  `import generateBarcode from "../dist/index.js"` is now broken as expected, and the fix stays with
+  [000002-DemoSiteReact19Upgrade.md](./000002-DemoSiteReact19Upgrade.md) per the Developer Notes.
 
 ---
 
-## Task 9: [ ] Add a TypeScript declaration for the default export
+## Task 9: [x] Add a TypeScript declaration for the default export
 
 **Task:** The library is plain JS, so TypeScript consumers (the common case in React 19 apps) get no
 types. Hand-write a small declaration and ship it in the publish root.
@@ -772,6 +840,15 @@ consumption path.
 **Acceptance Criteria:** AC 5
 
 **History:**
+- 2026-08-13 — Completed. Created `src/index.d.ts` with exactly the specified contents — the
+  `BarcodeOptions` interface (`spacing`, `raw`, `height`, all optional, each with its doc comment) and
+  the `export default function generateBarcode(value?: string, opts?: BarcodeOptions): string`
+  declaration. `export default` kept as specified; **not** switched to `export = generateBarcode`. No
+  separate copy step was added — Task 5's `build.js` copies it, verified: a build from a wiped `dist/`
+  produced `dist/index.d.ts` (521 B), and `npm run pack:preview` lists it in the tarball, so Task 8's
+  `types: "index.d.ts"` resolves from the publish root. The end-to-end editor/`tsc` resolution check
+  belongs to Task 10 step 5 (no TypeScript is installed in this repo — the library is plain JS and the
+  declaration is hand-written, so nothing here type-checks it locally).
 - 2026-08-11 — Research completed: resolved the "extend the build/copy step, or emit it alongside the
   bundles" directive by folding `fs.copyFileSync("src/index.d.ts", "dist/index.d.ts")` into Task 5's
   `build.js`. Verified the drafted option types against the source and recorded why `export default`
@@ -779,7 +856,7 @@ consumption path.
 
 ---
 
-## Task 9.5: [ ] Make base64 encoding work in the browser (remove the `Buffer` dependency)
+## Task 9.5: [x] Make base64 encoding work in the browser (remove the `Buffer` dependency)
 
 > **Do this BEFORE Task 10** — Task 10's Vite check cannot pass until this lands. Numbered `9.5`
 > deliberately (mirroring Task 1.5) so the existing Task 10–18 numbering and all cross-references
@@ -826,6 +903,16 @@ rule in the Developer Notes.
 **Acceptance Criteria:** AC 6, AC 11
 
 **History:**
+- 2026-08-13 — Completed. Replaced `svgToDataURL` in [src/index.js](../../../../src/index.js) with the
+  specified single `TextEncoder` + `btoa` encoder. `Buffer` no longer appears anywhere in the published
+  source, no `typeof Buffer !== "undefined"` branch was added, and no `buffer` polyfill package was
+  installed — the library still has zero runtime dependencies. Parity is now **machine-verified**, not
+  just asserted: all 16 Task 1.5 fixture cases (captured from the `Buffer`-based published 1.2.1 bundle)
+  reproduce byte-for-byte from `src/index.js` under Vitest and from both built bundles
+  (`cjs parity OK 16`, `mjs parity OK 16`) on Node v24.16.0, so the encoder swap is provably
+  byte-identical and AC 11 is unaffected. No extra test was added beyond the fixture-parity assertions,
+  as the task directs. The browser half of AC 6 (no `ReferenceError: Buffer is not defined` under Vite)
+  is Task 10's check — this task removes the cause; Task 10 confirms the effect.
 - 2026-08-11 — Decision recorded: collapsed the originally-drafted dual-branch encoder
   (`Buffer` in Node, `btoa` in browsers) to a single universal `TextEncoder` + `btoa` path, for
   maintainability. Confirmed on Node v24.16.0 that both globals are present and the output is
@@ -875,7 +962,7 @@ and note it here).
 
 # Phase 3 — Real test suite (Vitest)
 
-## Task 11: [ ] Add Vitest and replace the placeholder test
+## Task 11: [x] Add Vitest and replace the placeholder test
 
 **Task:** [index.test.js](../../../../index.test.js) is a single `console.log` against `dist/index`
 and asserts nothing. Replace it with a real Vitest suite that tests the source directly (so tests
@@ -888,10 +975,14 @@ npm install --save-dev vitest@^4
 Add scripts:
 ```json
 "pretest": "node process.js",
-"test": "vitest",
+"test": "vitest run",
 "pretest:ci": "node process.js",
 "test:ci": "vitest run"
 ```
+
+`test` is `vitest run`, **not** bare `vitest` — both scripts are single-shot. A bare `vitest` starts the
+watcher and never exits, which hangs any non-interactive caller (`np`, a CI step, an agent). Watch mode
+is available on demand with `npx vitest`; it does not need a named script. See this task's History.
 
 Both `pre` hooks are required — npm runs `pre<name>` for arbitrary script names, but `pretest` fires
 only for `npm test`, **not** for `npm run test:ci`, so `test:ci` needs its own. These regenerate the
@@ -938,6 +1029,47 @@ Document here the intentional divergence from the `granite-ui` Jest convention (
 **Acceptance Criteria:** AC 7, AC 11
 
 **History:**
+- 2026-08-13 — **Deviation from the originally-specified `"test": "vitest"`, at Braden's direction
+  (2026-08-13): `test` is now `vitest run`,** so both test scripts are single-shot. Bare `vitest` starts
+  the file watcher and never exits, which hangs any non-interactive caller — a CI step in 000003, `np`
+  if it ever resolved `test` instead of `test:ci`, or an agent shelling out. The task body above was
+  updated to match so the two no longer disagree. AC 7 is unaffected: it requires `npm test` and
+  `npm run test:ci` to "run a real test runner with meaningful assertions" and to pass on Node 24, which
+  both now do — verified, each reporting **26 passed (26)**. The two scripts are deliberately identical
+  in effect; both are kept because AC 7 names both and `np.testScript` (Task 12) points at `test:ci`.
+  Watch mode is still one command away with `npx vitest` and needs no named script.
+- 2026-08-13 — **One transient suite failure recorded, since this suite is the release gate.** The very
+  first `npm test` after the `vitest run` edit failed with
+  `TypeError: Cannot read properties of undefined (reading 'config')` raised at the file's first
+  `describe()` call, collecting **no** tests — a Vitest-internal error, not an assertion failure. It has
+  **not** reproduced: five consecutive `npm test` / `npm run test:ci` runs went green, including runs
+  immediately after further `package.json` edits and one with `node_modules/.vite` deleted to force a
+  cold dependency re-optimize. Cause not identified; left as a known flake rather than papered over. If
+  it recurs — particularly in 000003's pipeline — the signature to look for is a `Test Files 1 failed`
+  with `Tests no tests`, which is distinguishable at a glance from a genuine parity regression.
+- 2026-08-13 — **Completed** (the Step 3 half). Added all four scripts — `pretest` / `test` /
+  `pretest:ci` / `test:ci` — exactly as specified except for the `test` deviation noted above, including
+  the separate `pretest:ci` hook (npm's
+  `pretest` fires only for `npm test`, never for `npm run test:ci`). Created `test/index.test.js`
+  importing `../src/index.js` and `./fixtures/baseline-1.2.1.json` directly, and `git rm index.test.js`
+  removed the root `console.log` placeholder. No `vitest.config.js` was needed — Vitest's default
+  include glob picked the file up, and its built-in JSON handling resolved `src/index.js`'s
+  `import ... from "../svgMap.json"` (Task 6) with no extra config. **`npm run test:ci` → 26 tests
+  passing in 1 file on Node v24.16.0 / Vitest 4.1.10**, and the `pretest:ci` hook regenerated the root
+  `svgMap.json` first as designed. The 26 break down as the 10 assertions the task lists plus the 16
+  fixture-parity cases, driven by `it.each` over `Object.keys(baseline.cases)` so a mismatch names the
+  exact failing case. Guard-wrapping is asserted by deriving the `*` glyph from `generateBarcode("")`
+  rather than hard-coding markup, so it cannot drift from the map. Per the explicit warning, **no test
+  asserts lowercase input is stripped** — the suite asserts the opposite (`"abc-123"` → 9 glyphs, all
+  rendering); the filter case uses `#`, `.`, `@` and `$`. No test cases beyond the listed set were
+  added.
+- 2026-08-13 — **Vitest over Jest — the intentional divergence, restated here** as the task asks
+  (rationale in this file's Developer Notes). `granite-ui` standardizes on Jest 29, but it has jsdom /
+  React component tests; this library is pure functions returning strings with no DOM, and Phase 2 makes
+  it ESM-first. Vitest 4 ran the ESM source on Node 24 with **zero** config — no `vitest.config.js`, no
+  Babel config (Task 7 deleted the root `.babelrc` and nothing reintroduced one), no jsdom, and no
+  transform step for the JSON map import. Choosing Jest here would have meant re-adding exactly the
+  Babel/ESM plumbing Phase 1 and Phase 2 removed. The divergence is deliberate and scoped to this repo.
 - 2026-08-13 — **Install half completed** in the ROADMAP Step 2 batch: `vitest@4.1.10` installed as a
   devDependency (`^4.1.10`), matching the pinned floor and its
   `engines.node: "^20.0.0 || ^22.0.0 || >=24.0.0"`. Everything else in this task is **still open** and
@@ -953,7 +1085,7 @@ Document here the intentional divergence from the `granite-ui` Jest convention (
 
 ---
 
-## Task 12: [ ] Gate releases on the test suite
+## Task 12: [x] Gate releases on the test suite
 
 **Task:** With a real suite in place, stop skipping tests on release. Update the `np` config in
 `package.json`:
@@ -973,12 +1105,28 @@ Remove `"tests": false`. Confirm `npx np --preview` reports that it will run `te
 **Acceptance Criteria:** AC 7, AC 9
 
 **History:**
+- 2026-08-13 — Completed. The `np` block in `package.json` is now exactly
+  `{ "contents": "dist", "testScript": "test:ci" }` — `"tests": false` removed. Confirmed `testScript`
+  is the correct key for `np@12` by reading its source rather than trusting the name:
+  `np/source/index.js:90` does `const testScript = options.testScript || 'test'` and line 209 runs
+  `<packageManager> run <testScript>`, so with this config a release runs `npm run test:ci`; had the key
+  been wrong it would have silently fallen back to `npm run test`. That fallback is now harmless — Task
+  11's `test` script was changed to `vitest run` on 2026-08-13, so both are single-shot and neither can
+  hang a release on the watcher.
+- 2026-08-13 — **`np --preview` confirmation deferred, by Braden's direction (2026-08-13):** the `np`
+  preview run is to happen once, at the end of **both** 000001 and 000002, rather than per-task here.
+  It also cannot pass yet on its own terms — `np` aborts on prerequisite checks before it prints its task
+  list, first with "Not on `master` branch" and then, with `--any-branch`, "Unclean working tree. Commit
+  or stash changes first." Both are the documented Task 18 preconditions (release from `master`, clean
+  tree), not defects. What *was* confirmed here: the script chain resolves the lockfile-pinned binary —
+  the stack traces come from `node_modules/np/source/…`, and `npx np --version` prints `12.0.1`, matching
+  `package-lock.json`.
 
 ---
 
 # Phase 4 — Prune library devDependencies and standardize on npm
 
-## Task 13: [ ] Remove stale library-toolchain devDependencies
+## Task 13: [x] Remove stale library-toolchain devDependencies
 
 **Task:** The `devDependencies` block carries a stale ESLint 6 stack that no npm script uses.
 Prune the library-side dead weight (the demo-site's React / Emotion / Parcel **version** changes are
@@ -1028,6 +1176,21 @@ remove them here.
 **Acceptance Criteria:** AC 8
 
 **History:**
+- 2026-08-13 — **Completed** (the Step 3 half — the two file deletions). `git rm .eslintrc` and
+  `git rm .npmignore`. `.eslintrc` went with the packages, as required: leaving
+  `{ extends: "react-app" }` behind after `eslint-config-react-app` was uninstalled would make any
+  future `npx eslint` fail on an unresolvable `extends`. `.npmignore` was deleted because npm never
+  consults it on this project's real publish — `np` publishes from `dist/`, only `package.json` is copied
+  there, and Task 8's `files` array is the authoritative include-list. Confirmed empirically rather than
+  by argument: `npm run pack:preview` lists exactly `index.cjs`, `index.d.ts`, `index.mjs`,
+  `index.umd.js`, `package.json`, so packaging is unchanged by the deletion. Also re-verified this
+  task's first bullet now that Task 5 has landed — `rollup-plugin-babel` and `chalk` are absent from
+  `package.json`, a repo-wide grep (excluding `node_modules/` and `package-lock.json`) finds **zero**
+  references to either name in any source or config file, `build.js` uses
+  `require("node:util").styleText`, and no Rollup 1-era plugin remains. The keep-list is intact
+  (`@babel/core`, `@babel/preset-env`, `rollup`, `@rollup/plugin-babel`, `@rollup/plugin-json`, `vitest`,
+  `np`) along with the two out-of-scope entries `all-contributors-cli` and `normalize.css`, and there is
+  still no `dependencies` key — zero runtime dependencies preserved.
 - 2026-08-13 — **Package-removal half completed** in the ROADMAP Step 2 batch. Removed all ten ESLint 6
   packages (`eslint`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`, `babel-eslint`,
   `eslint-config-react-app`, `eslint-plugin-flowtype`, `eslint-plugin-import`,
@@ -1098,7 +1261,7 @@ Confirm `npx np --version` prints `12.x`. Verified 2026-08-11: `np@12.0.1` decla
 
 ---
 
-## Task 14.5: [ ] Simplify the release scripts
+## Task 14.5: [x] Simplify the release scripts
 
 **Task:** Releasing is currently a set of memorized command sequences rather than named scripts. The
 only release-related script is `"release": "npx np"`, and the verification steps later in this plan
@@ -1170,6 +1333,25 @@ Verify after editing:
 **Acceptance Criteria:** AC 12
 
 **History:**
+- 2026-08-13 — Completed. `package.json` now carries the final release block: `copy-manifest` and
+  `postversion` unchanged from Task 3, plus `pack:preview`
+  (`npm run build && npm run copy-manifest && npm pack ./dist --dry-run`), `release:preview`
+  (`np --preview`), and `release` changed from `npx np` to `np`. All three specified changes made; **no**
+  per-bump-type scripts, **no** `test:ci` in the `release` chain (Task 12's `np.testScript` already gates
+  it), and **no** `prepublishOnly` hook.
+  - **`npm run pack:preview` verified** on Node v24.16.0 / npm 11.13.0: builds, stages the manifest, and
+    prints a listing of exactly the five expected entries — `index.cjs`, `index.d.ts`, `index.mjs`,
+    `index.umd.js`, `package.json` (total files: 5, package size 11.2 kB). Confirmed it **writes nothing**:
+    no `.tgz` at the repo root or in `dist/` afterward. `npm pack ./dist --dry-run` needed no `cd`, as
+    researched.
+  - **`npx np --version` → `12.0.1`, matching `package-lock.json`'s `np` entry**, confirming the bare
+    `np` in `release` invokes the lockfile-pinned local binary rather than a fetched one.
+  - **`npm run release:preview` output check deferred**, per Braden's direction (2026-08-13) that the `np`
+    preview happen once at the end of both 000001 and 000002. The script wiring is nonetheless proven: it
+    resolved and executed the local `np`, which then aborted on its documented Task 18 preconditions
+    ("Not on `master` branch", then "Unclean working tree") before reaching its task list. Argument
+    forwarding is also confirmed working — `npm run release:preview -- minor` reached `np` as
+    `np --preview minor`.
 - 2026-08-11 — Task added. Requested directly: the repo had no simplified release scripts, only
   `"release": "npx np"`, with Tasks 17/18 documenting raw command sequences instead. Verified
   `npm pack ./dist --dry-run` against npm 11.13.0 / Node 24.16.0 so the tarball check needs no `cd`.
