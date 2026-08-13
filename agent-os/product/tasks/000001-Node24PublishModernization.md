@@ -1359,7 +1359,7 @@ Verify after editing:
 
 ---
 
-## Task 15: [ ] Standardize on npm (remove `yarn.lock`, commit `package-lock.json`)
+## Task 15: [x] Standardize on npm (remove `yarn.lock`, commit `package-lock.json`)
 
 **Task:** The repo is Yarn-based today — a committed `yarn.lock` (~408 KB) and **no
 `package-lock.json`**. Every task in this plan (and 000003's CI, which runs `npm ci`) assumes npm.
@@ -1383,6 +1383,24 @@ The first `npm install` in Phase 1 (Task 4) already generates a `package-lock.js
 **Acceptance Criteria:** AC 10
 
 **History:**
+- 2026-08-13 — **Completed — step 3 (the commit) has landed, closing the task.** `package-lock.json` was
+  committed and `yarn.lock` deleted in the **same** commit, `4d8ef35` ("Dependency steps for 000001"), so
+  the repo never had a window with both lockfiles or neither. Confirmed against the current tree:
+  `git ls-files` lists `package-lock.json` and `git ls-files yarn.lock` returns **nothing**, so Yarn is
+  gone from version control, not merely from disk.
+  - **Step 1 (the lockfile is current) independently re-verified during Task 16's clean install.** After
+    wiping `node_modules/` and running `npm install` on Node v24.16.0 / npm 11.13.0,
+    `git diff --exit-code -- package-lock.json` returns **0** — npm rewrote nothing, so the committed
+    lockfile already matches what a fresh resolve produces. The only working-tree mark afterward is a
+    line-ending artifact (npm writes LF; `.gitattributes` `* text=auto` normalizes to CRLF) with **zero**
+    content change, which is why `git status` shows `M` while `git diff` shows an empty patch. Not a real
+    diff and nothing to re-commit.
+  - Steps 2, 4 and 5 stand as recorded in the entry below — including AC 10's `npm ci` check, which
+    exited 0 with no `EBADENGINE` and no `ERESOLVE` after a full `node_modules` wipe. Task 16's
+    `npm install` on the same tree reproduced that clean result, so **AC 10 is satisfied by both install
+    paths**, not just the one the 000003 pipeline will run.
+  - Marked complete at Braden's direction on 2026-08-13, once the commit that step 3 was waiting on was
+    confirmed present.
 - 2026-08-13 — Steps 1, 2, 4 and 5 completed in the ROADMAP Step 2 batch; **only step 3 (the commit)
   remains** and is left to the maintainer. `package-lock.json` generated fresh at
   `lockfileVersion: 3` (1302 packages audited). `yarn.lock` removed with `git rm -f` — a plain
@@ -1407,7 +1425,7 @@ The first `npm install` in Phase 1 (Task 4) already generates a `package-lock.js
 
 # Phase 5 — Final verification and publish
 
-## Task 16: [ ] Clean install and build on Node 24
+## Task 16: [x] Clean install and build on Node 24
 
 **Task:** From a Node 24 environment (`node -v` → `v24.x`, matching `.nvmrc`; `nvm use 24` if
 needed), verify a clean build:
@@ -1440,6 +1458,44 @@ changed generator output — investigate in Task 5/7 before publishing; do not u
 **Acceptance Criteria:** AC 1, AC 3, AC 4, AC 7, AC 11
 
 **History:**
+- 2026-08-13 — Completed. Ran the specified sequence verbatim on Node **v24.16.0** / npm 11.13.0
+  (matching the `.nvmrc` pin of `24`) after `Remove-Item -Recurse -Force node_modules, dist` — both
+  directories confirmed absent before starting, so this was a genuine cold build, not an incremental one.
+  Every step exited **0**:
+  - **`npm install`** — 1301 packages added, 1302 audited, in 11s. **No `EBADENGINE` and no `ERESOLVE`.**
+    The install also proves the committed lockfile is current (Task 15 step 1): `git diff --exit-code --`
+    `package-lock.json` returns 0 afterward, so npm rewrote nothing. The only working-tree mark is a
+    line-ending artifact — npm writes LF and `.gitattributes` (`* text=auto`) normalizes to CRLF — with
+    zero content change.
+  - **`npm run build`** — printed only `Starting build...` / `Build complete.` and emitted **no Rollup
+    warnings at all**, not even an `EMPTY_BUNDLE` or plugin-version notice. **AC 1 therefore has nothing
+    to justify here** — the "any warning left in place must be recorded in Task 16's History" clause is
+    vacuous because there are no warnings to record.
+  - **`npm run test:ci`** — `pretest:ci` regenerated `svgMap.json` first (and this run reproduced the
+    committed map with **zero** diff, so the `fs.readdir` key-order churn noted in Tasks 6 and 19 has
+    settled), then Vitest 4.1.10 reported **26 passed (26)** in 1 file, 365ms. No recurrence of the
+    transient `Cannot read properties of undefined (reading 'config')` flake recorded in Task 11.
+  - **`npm test` also run in the same cold environment**, beyond this task's script list, because AC 7
+    names both entry points: `pretest` fired, then **26 passed (26)**, exit 0. Both halves of AC 7 are
+    therefore green on a clean Node 24 install, not just `test:ci`.
+  - **`dist/` contents confirmed** — exactly the four expected files and nothing else: `index.cjs`
+    (54,280 B), `index.mjs` (54,270 B), `index.umd.js` (56,590 B), `index.d.ts` (521 B).
+  - **Built-output parity against the Task 1.5 fixture passes at both levels** — the two parity scripts
+    printed `cjs parity OK 16` and `mjs parity OK 16`, each exiting 0. All **16** fixture cases reproduce
+    byte-for-byte from the *built* bundles, which is the level the Rollup 1 → 4 and Babel changes could
+    actually have broken. No mismatch, so the fixture was not touched. The CJS script calls the
+    `require()` result directly as a function, which independently re-confirms Task 5's
+    `exports: "default"` is in effect.
+  - **AC 3 floors re-verified against the installed tree** (`npm ls --depth=0`): `rollup@4.62.4`,
+    `@rollup/plugin-babel@7.1.0`, `@rollup/plugin-json@6.1.0`, `@babel/core@7.8.4`,
+    `@babel/preset-env@7.8.4`, `vitest@4.1.10`, `np@12.0.1` — every one at or above its stated floor. No
+    shell-helper package (`shx` or similar) is present.
+  - **Not a build warning, recorded for completeness:** `npm install` printed ~40 `npm warn deprecated`
+    notices and the 144-vulnerability audit summary. Both are pre-existing and attributed in Task 15's
+    audit baseline to the demo-site stack still pinned here (`parcel@^2.0.0-beta.1`, `react`/
+    `react-dom@16`, `all-contributors-cli`); `npm audit --omit=dev` is **0** and 000002 Task 1 replaces
+    that stack. AC 1's warning clause is scoped to Rollup warnings from `npm run build`, of which there
+    were none.
 
 ---
 
