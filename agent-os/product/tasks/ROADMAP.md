@@ -1,6 +1,6 @@
 # barcode-generator — Modernization Roadmap
 
-## Braden Steiner - Last Modified: 2026-08-11
+## Braden Steiner - Last Modified: 2026-08-13
 
 ## Goal
 
@@ -52,9 +52,20 @@ the critical path.
 
 ```
 npm install --save-dev rollup@^4 @rollup/plugin-babel@^7 @rollup/plugin-json@^6 vitest@^4 np@^12
-npm uninstall rollup-plugin-babel chalk eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser babel-eslint eslint-config-react-app eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks
-git rm yarn.lock
+npm uninstall rollup-plugin-babel chalk parcel-bundler eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser babel-eslint eslint-config-react-app eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks
+git rm -f yarn.lock
 ```
+
+Two amendments from actually running this on 2026-08-13 (Node v24.16.0 / npm 11.13.0):
+
+- **`parcel-bundler` was added to the uninstall list**, though it is nominally 000002 Task 1's. Its
+  `deasync` postinstall spawns `node-gyp.cmd` without `shell: true`, which Node ≥20.12 on Windows
+  rejects with `spawn EINVAL` — it fails the whole `npm install`, so Step 2 cannot complete around it.
+- **Run the uninstall before the install, and drop the old `rollup` / `@rollup/plugin-json` specs
+  first.** Installing while `rollup@^1.31.0` and `@rollup/plugin-json@^4.0.2` were still in
+  `package.json` failed with `ERESOLVE` (plugin-json@4's `peer rollup@^1.20.0` vs plugin-babel@7's
+  `peerOptional rollup@^2||^3||^4`), and wiping `node_modules` did not help — npm kept resolving
+  `rollup` from the stale root spec. `npm uninstall rollup @rollup/plugin-json` first, then install.
 
 The build is **expected to be red between Steps 2 and 3** — `chalk` is uninstalled in Step 2 but
 `build.js` stops referencing it only when Task 5 lands. That is why Step 2's check is `npm ci`, not

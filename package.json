@@ -3,7 +3,6 @@
   "version": "1.2.1",
   "main": "dist/index.js",
   "license": "MIT",
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/tecuity/barcode-generator"
@@ -32,25 +31,15 @@
     "@babel/preset-env": "^7.8.4",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
-    "@rollup/plugin-json": "^4.0.2",
-    "@typescript-eslint/eslint-plugin": "2.x",
-    "@typescript-eslint/parser": "2.x",
+    "@rollup/plugin-babel": "^7.1.0",
+    "@rollup/plugin-json": "^6.1.0",
     "all-contributors-cli": "^6.13.0",
-    "babel-eslint": "10.x",
-    "chalk": "^3.0.0",
-    "eslint": "6.x",
-    "eslint-config-react-app": "^5.2.0",
-    "eslint-plugin-flowtype": "3.x",
-    "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "1.x",
     "normalize.css": "^8.0.1",
+    "np": "^12.0.1",
     "parcel": "^2.0.0-beta.1",
-    "parcel-bundler": "^1.12.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "rollup": "^1.31.0",
-    "rollup-plugin-babel": "^4.3.3"
+    "rollup": "^4.62.4",
+    "vitest": "^4.1.10"
   }
 }

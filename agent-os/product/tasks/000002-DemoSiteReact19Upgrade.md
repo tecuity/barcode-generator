@@ -1,6 +1,6 @@
 # 000002-DemoSiteReact19Upgrade - Tasks
 
-## Braden Steiner - Last Modified: 2026-08-11
+## Braden Steiner - Last Modified: 2026-08-13
 
 ## Story Description
 
@@ -30,8 +30,12 @@ place when this story starts.
   `e.keyCode === 13` Enter check.
 - `demo-site/Tape.js` imports `keyframes`/`css` from `@emotion/core` (Emotion v10 package name).
 - `devDependencies` pin `react@^16.12.0`, `react-dom@^16.12.0`, `@emotion/core@^10.0.27`,
-  `@emotion/styled@^10.0.27`, and **both** `parcel@^2.0.0-beta.1` and `parcel-bundler@^1.12.4`
-  (the latter is dead — Parcel 1, superseded).
+  `@emotion/styled@^10.0.27`, and `parcel@^2.0.0-beta.1`.
+- **`parcel-bundler@^1.12.4` is already gone** — removed early, on 2026-08-13, by 000001 Task 13
+  rather than by Task 1 here. It had to go before 000001 could install anything: `parcel-bundler@1`
+  depends on `deasync`, whose postinstall spawns `node-gyp.cmd` without `shell: true`, which Node ≥20.12
+  on Windows rejects with `spawn EINVAL` — failing `npm install` outright on Node 24. Task 1 below is
+  amended accordingly; nothing else about it changes.
 - The repo-root `.babelrc` is `{ "presets": ["@babel/preset-env"] }` — no `@babel/preset-react`.
   Under Parcel 1 this was fine (Parcel 1 added JSX support itself); under Parcel 2 it is a hazard
   (see Developer Notes). 000001 Task 7 deletes it.
@@ -43,7 +47,9 @@ place when this story starts.
 
 1. `devDependencies` put the demo-site on React 19 (`react`/`react-dom` `^19`), Emotion 11
    (`@emotion/react@^11.14.0`, `@emotion/styled@^11.14.1`; `@emotion/core` removed), and a stable
-   Parcel 2 (`parcel@^2`); the duplicate `parcel-bundler@1` is removed.
+   Parcel 2 (`parcel@^2`); the duplicate `parcel-bundler@1` is removed. (The `parcel-bundler@1`
+   half is **already satisfied** — 000001 Task 13 removed it on 2026-08-13; just verify it is still
+   absent rather than re-running an uninstall.)
 2. Demo-site source uses `createRoot` (no `ReactDOM.render`), imports Emotion from `@emotion/react`
    (no `@emotion/core`), and uses `e.key === "Enter"` (no `keyCode`).
 3. `npm run start-site` serves the demo; typing a value and clicking GO renders a barcode.
@@ -140,11 +146,13 @@ The starting-state facts above were confirmed against the working tree: React 16
 - Replace `@emotion/core@^10` with `@emotion/react@^11.14.0`; bump `@emotion/styled@^10` →
   `^11.14.1` (these are the versions whose peer `react: ">=16.8.0"` covers React 19 and include the
   React-19 ref-forwarding fix — see Developer Notes).
-- Pin a stable `parcel@^2`; **remove `parcel-bundler@^1.12.4`** (dead Parcel 1 duplicate).
+- Pin a stable `parcel@^2`. **`parcel-bundler@^1.12.4` needs no action here** — 000001 Task 13 already
+  removed it (see Starting state). Confirm it is absent from `package.json`; do not re-run an uninstall
+  for it.
 
 ```
 npm install --save-dev react@^19 react-dom@^19 @emotion/react@^11.14.0 @emotion/styled@^11.14.1 parcel@^2
-npm uninstall @emotion/core parcel-bundler
+npm uninstall @emotion/core
 ```
 
 > **Lockfile.** 000001 Task 15 already removed `yarn.lock` and committed `package-lock.json`, so this
@@ -157,6 +165,21 @@ npm uninstall @emotion/core parcel-bundler
 **Acceptance Criteria:** AC 1
 
 **History:**
+- 2026-08-13 — Scope reduced: `parcel-bundler` dropped from this task's uninstall list because 000001
+  Task 13 already removed it, so the command is now `npm uninstall @emotion/core`. This was not a
+  preference — `parcel-bundler@1.12.4` depends on `deasync@^0.1.14`, whose `install` script
+  (`node ./build.js`) spawns `node-gyp.cmd` through `child_process.spawn` **without** `shell: true`;
+  Node ≥20.12 on Windows rejects that with `spawn EINVAL`, which failed the entire `npm install` on
+  Node 24 (reproduced on Node v24.16.0 / npm 11.13.0) and blocked 000001's whole dependency
+  transaction. Isolation-tested as the only blocker: a probe install of the full target dependency set
+  minus `parcel-bundler` exited 0 with no `ERESOLVE`/`EBADENGINE`. Approved by Braden on 2026-08-13.
+  Everything else this task owns was deliberately left alone for it: `@emotion/core@^10.0.27`,
+  `@emotion/styled@^10.0.27`, `react@^16.12.0`, `react-dom@^16.12.0` and `parcel@^2.0.0-beta.1` are all
+  still in `package.json`.
+- 2026-08-13 — Note for whoever runs this task: the ~138 `npm audit` findings currently attributed to
+  the demo-site stack (measured in 000001 Task 15's History) trace chiefly to the 2020-era
+  `parcel@^2.0.0-beta.1` pinned above. Bumping it to a stable `parcel@^2` here is expected to clear
+  most of them — worth re-running `npm audit` after this task to record the new baseline.
 
 ---
 

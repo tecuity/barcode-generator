@@ -445,6 +445,19 @@ Notes:
 **Acceptance Criteria:** AC 3
 
 **History:**
+- 2026-08-13 — **Install half completed** as part of the ROADMAP Step 2 batch (one dependency
+  transaction covering Tasks 4, 11, 13, 14, 15). Installed `rollup@4.62.4`,
+  `@rollup/plugin-babel@7.1.0` and `@rollup/plugin-json@6.1.0`; removed `rollup-plugin-babel` and
+  `chalk`. `package.json` now carries `^4.62.4` / `^7.1.0` / `^6.1.0`. npm's tree reuse forced a
+  detour: running the specified install while the old `rollup@^1.31.0` and
+  `@rollup/plugin-json@^4.0.2` specs were still in `package.json` failed with `ERESOLVE` — npm
+  resolved `rollup` from the stale root spec and held `@rollup/plugin-json@4.0.2`'s
+  `peer rollup@"^1.20.0"` against `@rollup/plugin-babel@7.1.0`'s
+  `peerOptional rollup@"^2||^3||^4"` — and wiping `node_modules` did **not** help. Dropping those two
+  specs first (`npm uninstall rollup @rollup/plugin-json`) and then running the specified install
+  resolved cleanly. **Code half still open:** `build.js` still does `require("rollup-plugin-babel")`
+  and `require("chalk")`, so `npm run build` is red until Task 5 lands — the expected red window
+  called out in ROADMAP Step 2.
 - 2026-08-11 — Research completed: pinned the exact toolchain versions against the npm registry and
   corrected `@rollup/plugin-babel` from `^6` to `^7` (7.1.0 is the current major; v7's only breaking
   change was `include`/`exclude` filtering, which this build does not use).
@@ -659,6 +672,16 @@ Keep `@babel/core` and `@babel/preset-env` current (`^7` latest) — bump if nee
 **Acceptance Criteria:** AC 3, AC 4
 
 **History:**
+- 2026-08-13 — Finding from the Step 2 install batch, recorded here because this task owns the
+  "keep `@babel/core` and `@babel/preset-env` current (`^7` latest)" decision. Both resolved to
+  **7.8.4** — the exact floor, not the newest 7.x — because npm's tree reuse kept the already-installed
+  copies that satisfy `^7.8.4`, and that choice is now pinned in `package-lock.json`. Verified it is
+  **not** a blocker: `@babel/preset-env@7.8.4` handles this task's
+  `targets: { node: "20" }, modules: false` config correctly, emitting pass-through output that leaves
+  object spread untranspiled and keeps `export default` as ESM. So "bump if needed for Node 24"
+  evaluates to *not needed*. If a bump to latest 7.x is still wanted, do it in Step 3 alongside the
+  other `package.json` edits so the lockfile churns only once. Do **not** jump to `@babel/core@8` /
+  `@babel/preset-env@8` (both now latest overall) — this plan pins `^7`.
 - 2026-08-11 — Research completed: settled the Babel targets. Dropped `esmodules: true` from the
   preset config — Babel unions it with the ES-module browser baseline (Chrome 61 / Safari 11 /
   Edge 16) rather than filtering, and Edge 16 predates the object spread used in `src/index.js`, so
@@ -915,6 +938,13 @@ Document here the intentional divergence from the `granite-ui` Jest convention (
 **Acceptance Criteria:** AC 7, AC 11
 
 **History:**
+- 2026-08-13 — **Install half completed** in the ROADMAP Step 2 batch: `vitest@4.1.10` installed as a
+  devDependency (`^4.1.10`), matching the pinned floor and its
+  `engines.node: "^20.0.0 || ^22.0.0 || >=24.0.0"`. Everything else in this task is **still open** and
+  belongs to Step 3, which owns the `package.json` scripts block: the `pretest` / `test` /
+  `pretest:ci` / `test:ci` scripts are not added, `test/index.test.js` does not exist, and the root
+  placeholder `index.test.js` is still present. The `granite-ui` Jest-divergence rationale is
+  documented in this file's Developer Notes and still needs restating here when the suite lands.
 - 2026-08-11 — Research completed: resolved the "`src/index.test.js` (or `test/index.test.js`)"
   directive in favour of `test/index.test.js`, so the suite sits with its Task 1.5 fixtures and `src/`
   stays source-only. Confirmed Vitest's default include glob covers it with no config file. Also
@@ -951,9 +981,10 @@ Remove `"tests": false`. Confirm `npx np --preview` reports that it will run `te
 ## Task 13: [ ] Remove stale library-toolchain devDependencies
 
 **Task:** The `devDependencies` block carries a stale ESLint 6 stack that no npm script uses.
-Prune the library-side dead weight (the demo-site's React / Emotion / Parcel dependency changes,
-including removing the duplicate `parcel-bundler@1`, are handled in
-[000002-DemoSiteReact19Upgrade.md](./000002-DemoSiteReact19Upgrade.md)):
+Prune the library-side dead weight (the demo-site's React / Emotion / Parcel **version** changes are
+handled in [000002-DemoSiteReact19Upgrade.md](./000002-DemoSiteReact19Upgrade.md); the one exception is
+the duplicate `parcel-bundler@1`, which was originally 000002's to remove but had to be dropped here
+because it blocks every `npm install` on Node 24 under Windows — see the deviation note in History):
 
 - **Confirm `rollup-plugin-babel` and `chalk` are already gone** — Task 4 already runs
   `npm uninstall rollup-plugin-babel chalk`. Do not run it again; just verify both are absent from
@@ -997,6 +1028,35 @@ remove them here.
 **Acceptance Criteria:** AC 8
 
 **History:**
+- 2026-08-13 — **Package-removal half completed** in the ROADMAP Step 2 batch. Removed all ten ESLint 6
+  packages (`eslint`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`, `babel-eslint`,
+  `eslint-config-react-app`, `eslint-plugin-flowtype`, `eslint-plugin-import`,
+  `eslint-plugin-jsx-a11y`, `eslint-plugin-react`, `eslint-plugin-react-hooks`) plus
+  `rollup-plugin-babel` and `chalk` (Task 4's uninstall, run once in this batch — not repeated).
+  Dependency-usage pass done first, as this task requires: a repo-wide grep across `src/`, the root
+  `*.js` files and all config found **zero** references to any of the ten ESLint packages outside
+  `package.json` itself — the only hits were the `.eslintcache` comment lines in `.gitignore` and
+  `.npmignore`, plus `.eslintrc`'s own `{ extends: "react-app" }`. Confirmed there is still no `lint`
+  script. `chalk` and `rollup-plugin-babel` are referenced only in `build.js`, which Task 5 rewrites
+  away. Kept as instructed: `all-contributors-cli` and `normalize.css`. **Not** done — the `.eslintrc`
+  and `.npmignore` deletions, which stay with Step 3. One incidental diff to expect on review: npm
+  normalized away the empty `"dependencies": {}` block. Nothing was added — an absent `dependencies`
+  key is equivalent to an empty one, and npm strips it on every install, so it was not restored. The
+  zero-runtime-dependency rule in the Developer Notes still holds and `npm audit --omit=dev` reports 0.
+- 2026-08-13 — **Deviation: `parcel-bundler@^1.12.4` was removed here**, although this task lists it as
+  out of scope (000002 Task 1's line item). It is unbuildable on Node 24 under Windows and blocked the
+  entire Step 2 transaction, so Step 2 could not have been completed around it. Root cause:
+  `parcel-bundler@1.12.4` depends on `deasync@^0.1.14`, whose `install` script (`node ./build.js`)
+  spawns `node-gyp.cmd` through `child_process.spawn` **without** `shell: true`; Node ≥20.12 on Windows
+  rejects that, so the postinstall dies with `spawn EINVAL` and takes the whole `npm install` down
+  (reproduced: exit 1 on Node v24.16.0 / npm 11.13.0). Confirmed by isolation that it is the **only**
+  blocker — a probe install of the full target dependency set minus `parcel-bundler` succeeded with
+  exit 0 and no `ERESOLVE`/`EBADENGINE`. Approved by Braden on 2026-08-13 over the alternatives of
+  installing with `--ignore-scripts` (would commit a lockfile that cannot actually install on Windows,
+  leaving AC 10 unmet) or re-sequencing 000002 ahead of 000001 Step 2. **Impact on 000002 Task 1:** its
+  `npm uninstall @emotion/core parcel-bundler` line is already satisfied for `parcel-bundler`; only
+  `@emotion/core` remains. Deliberately left in place for 000002: `@emotion/core@^10.0.27`,
+  `@emotion/styled@^10.0.27`, `react@^16.12.0`, `react-dom@^16.12.0` and `parcel@^2.0.0-beta.1`.
 - 2026-08-11 — Research completed: resolved the "unless the team actively lints" directive to an
   unconditional removal. `package.json` has no `lint` script and `.eslintrc` carries no rule config,
   so nothing in the repo can be linting. Added `.eslintrc` and `.npmignore` to the deletions —
@@ -1005,7 +1065,7 @@ remove them here.
 
 ---
 
-## Task 14: [ ] Upgrade `np` for Node 24
+## Task 14: [x] Upgrade `np` for Node 24
 
 **Task:** Ensure the release tool runs on Node 24. `np` is **not** in `devDependencies` today — only
 `"release": "npx np"` — so this task adds it. Install the current major:
@@ -1023,6 +1083,18 @@ Confirm `npx np --version` prints `12.x`. Verified 2026-08-11: `np@12.0.1` decla
 **Acceptance Criteria:** AC 3, AC 9
 
 **History:**
+- 2026-08-13 — Completed in the ROADMAP Step 2 batch. `npm install --save-dev np@^12` resolved
+  `np@12.0.1` (`engines.node: ">=22"`, so Node-24-clean) and `package.json` now carries `^12.0.1`.
+  `npx np --version` prints `12.0.1`, confirming it resolves to the local lockfile-pinned binary rather
+  than a fetched one — which is what Task 14.5's `"release": "np"` change relies on. Not pinned to
+  `np@^10`.
+- 2026-08-13 — Advisory noted, deliberately not fixed. `npm audit` reports one **high** advisory
+  reachable only through `np`: `tmp <=0.2.5` (GHSA-52f5-9888-hmc6 arbitrary temp file/dir write via
+  symlink, GHSA-ph9p-34f9-6g65 path traversal via unsanitized prefix/postfix). npm's only offered
+  remediation is `npm audit fix --force`, which downgrades to `np@2.16.1` — a breaking downgrade this
+  task explicitly forbids. Accepted as-is: `np` is a devDependency that never reaches consumers (the
+  library has zero runtime dependencies and `npm audit --omit=dev` reports **0** vulnerabilities), and
+  it executes only on a maintainer's machine during a release.
 
 ---
 
@@ -1129,6 +1201,25 @@ The first `npm install` in Phase 1 (Task 4) already generates a `package-lock.js
 **Acceptance Criteria:** AC 10
 
 **History:**
+- 2026-08-13 — Steps 1, 2, 4 and 5 completed in the ROADMAP Step 2 batch; **only step 3 (the commit)
+  remains** and is left to the maintainer. `package-lock.json` generated fresh at
+  `lockfileVersion: 3` (1302 packages audited). `yarn.lock` removed with `git rm -f` — a plain
+  `git rm` refused it because npm had re-synced the file in place during the install, so it showed
+  local modifications. `np` needs no configuration to use npm: with no `yarn.lock` present it
+  auto-detects npm, and the historical `np.yarn: false` flag was already gone (commit `595e758`).
+  **AC 10's check passes:** after a full `node_modules` wipe, `npm ci` on Node v24.16.0 / npm 11.13.0
+  exited 0 and installed 1301 packages with **no `EBADENGINE` and no `ERESOLVE`** (one unrelated
+  `npm warn deprecated glob@7.1.6` notice, reached via the demo-site stack). Working tree left at
+  `M package.json`, `D yarn.lock`, `?? package-lock.json`.
+- 2026-08-13 — Audit baseline recorded for the new lockfile, so later steps have a reference point.
+  `npm audit` reports **144** vulnerabilities (6 low, 62 moderate, 63 high, 13 critical), all in
+  devDependencies. Attribution measured by isolation rather than estimated: the published surface has
+  **0** (`npm audit --omit=dev`, as expected for a zero-runtime-dependency package that publishes only
+  `dist/`); a probe of the library toolchain alone (`@babel/*`, `rollup@4`, both `@rollup/plugin-*`,
+  `vitest@4`, `np@12`) has **6** (5 low, 1 high — the `np`→`tmp` advisory noted in Task 14). The
+  remaining ~138 therefore come from the demo-site stack still pinned here — chiefly the 2020-era
+  `parcel@^2.0.0-beta.1`, plus `react`/`react-dom@16` and `all-contributors-cli` — which 000002 Task 1
+  replaces with a stable `parcel@^2`. Not actionable from 000001.
 
 ---
 
