@@ -1,7 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import styled from "@emotion/styled";
-import generateBarcode from "../dist/index.js";
+import generateBarcode from "../dist/index.mjs";
 import Tape from "./Tape";
 import logo from './logo.svg'
 import GithubCorner from './GithubCorner'
@@ -29,7 +29,7 @@ const App = () => {
               value={code}
               onChange={e => setCode(e.target.value)}
               onKeyDown={e => {
-                if (e.keyCode === 13) generate();
+                if (e.key === "Enter") generate();
               }}
             />
             <div style={{position: 'relative'}}>
@@ -181,4 +181,4 @@ const Circle = styled("div")`
   ${'' /* border: 2px solid rgba(255,255,255,.2); */}
 `
 
-ReactDOM.render(<App />, document.getElementById("root"));
+createRoot(document.getElementById("root")).render(<App />);

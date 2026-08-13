@@ -137,7 +137,7 @@ The starting-state facts above were confirmed against the working tree: React 16
 
 ---
 
-## Task 1: [ ] Bump demo-site React, Emotion, and Parcel versions
+## Task 1: [x] Bump demo-site React, Emotion, and Parcel versions
 
 **Task:** Move the demo-site off React 16 / Emotion 10 / Parcel 1.
 
@@ -165,6 +165,21 @@ npm uninstall @emotion/core
 **Acceptance Criteria:** AC 1
 
 **History:**
+- 2026-08-13 — Completed. Ran the two specified commands on Node v24.16.0 / npm 11.13.0.
+  `package.json` `devDependencies` now carry `react@^19.2.8`, `react-dom@^19.2.8`,
+  `@emotion/react@^11.14.0`, `@emotion/styled@^11.14.1` and `parcel@^2.16.4`; `@emotion/core` is gone
+  and `parcel-bundler` was confirmed still absent (grep of `package.json` returns zero matches) — no
+  uninstall re-run, per the amended scope. The install resolved cleanly with **no `ERESOLVE` and no
+  `--legacy-peer-deps`**, confirming the Developer Notes' finding that Emotion 11.14's
+  `react: ">=16.8.0"` peer satisfies React 19. Net tree change: +115 / −598 / 17 more removed with
+  `@emotion/core`. `package-lock.json` updated in place (it already existed from 000001 Task 15).
+- 2026-08-13 — `npm audit` baseline re-measured per the note below, and the expectation held:
+  **138 → 26 findings** (6 low, 7 moderate, 8 high, 5 critical), i.e. the 2020-era
+  `parcel@^2.0.0-beta.1` accounted for ~112 of them. None of the 26 that remain trace to the
+  demo-site stack — the roots are `all-contributors-cli`, `np`, `@babel/core`/`@babel/helpers` (still
+  pinned at 7.8.4 by 000001 Task 7's finding), and their transitive `ajv`/`lodash`/`minimist`/`qs`/
+  `y18n`/`yargs` chains. Nothing was auto-fixed; `npm audit fix` was deliberately not run, as it is
+  outside this task's scope.
 - 2026-08-13 — Scope reduced: `parcel-bundler` dropped from this task's uninstall list because 000001
   Task 13 already removed it, so the command is now `npm uninstall @emotion/core`. This was not a
   preference — `parcel-bundler@1.12.4` depends on `deasync@^0.1.14`, whose `install` script
@@ -183,7 +198,7 @@ npm uninstall @emotion/core
 
 ---
 
-## Task 2: [ ] Update demo-site source for React 19 and Emotion 11
+## Task 2: [x] Update demo-site source for React 19 and Emotion 11
 
 **Task:** Apply the code changes React 19 / Emotion 11 require:
 
@@ -209,10 +224,21 @@ needs no change. No further searching is required.
 **Acceptance Criteria:** AC 2
 
 **History:**
+- 2026-08-13 — Completed. All three edits applied exactly as specified:
+  [demo-site/index.js:2](../../../../demo-site/index.js#L2) swaps
+  `import ReactDOM from "react-dom"` for `import { createRoot } from "react-dom/client"`;
+  [demo-site/index.js:184](../../../../demo-site/index.js#L184) becomes
+  `createRoot(document.getElementById("root")).render(<App />);`;
+  [demo-site/index.js:32](../../../../demo-site/index.js#L32) becomes `if (e.key === "Enter")`; and
+  [demo-site/Tape.js:3](../../../../demo-site/Tape.js#L3) now imports `keyframes`/`css` from
+  `@emotion/react`. The task's "these are the only occurrences" claim held — a post-edit grep of
+  `demo-site/` for `@emotion/core`, `ReactDOM`, and `keyCode` returns **zero** matches.
+  `demo-site/GithubCorner.js` was read and left untouched as stated (it imports React only). No
+  `@emotion/babel-plugin`, JSX pragma, or Babel config was added.
 
 ---
 
-## Task 3: [ ] Fix the `dist` import path for the modernized build
+## Task 3: [x] Fix the `dist` import path for the modernized build
 
 **Task:** All of 000001 has landed before this story starts, so `dist/index.mjs` exists and
 `dist/index.js` does not. In [demo-site/index.js:4](../../../../demo-site/index.js#L4), change:
@@ -250,7 +276,7 @@ gitignored and absent on a fresh clone.
 
 ---
 
-## Task 4: [ ] Update the Parcel 2 site scripts
+## Task 4: [x] Update the Parcel 2 site scripts
 
 **Task:** The `start-site`/`build-site` scripts use Parcel 1 CLI flags. Verified 2026-08-11 against
 `parcel@2.16.4` (`engines.node: ">= 16.0.0"`, which `npm install --save-dev parcel@^2` resolves to):
@@ -284,10 +310,65 @@ names — none of which apply here.
 
 **Files:**
 - `package.json`
+- `demo-site/index.html` *(added 2026-08-13 — `<script type="module">`; see History)*
+- `.gitignore` *(added 2026-08-13 — `.parcel-cache`; see History)*
 
 **Acceptance Criteria:** AC 3, AC 4, AC 5
 
 **History:**
+- 2026-08-13 — **Four unanticipated Parcel 2 blockers found and fixed. Flag for review — three of
+  them required edits outside this task's original `Files` list.** The scripts as specified were
+  correct but not sufficient: a smoke build (`parcel build demo-site/index.html` into a scratch
+  directory, never `docs/`) failed outright, then silently produced a broken bundle. Root cause in
+  every case is the same class of problem the Developer Notes already flag three times — **the
+  demo-site and the library share one `package.json`, and 000001 turned that file into a library
+  manifest.** Parcel 1 ignored those fields; Parcel 2 reads them as build configuration.
+  1. **`main`/`module`/`types` are read by Parcel as *targets*.** The build died with
+     `No transformers found for demo-site/index.html with pipeline: 'types'` — Parcel tried to run
+     the HTML entry through `@parcel/transformer-typescript-types` because 000001 Task 8 added
+     `types: "index.d.ts"`. Fixed by adding a Parcel `targets` block to `package.json` disabling all
+     three: `"targets": { "main": false, "module": false, "types": false }`. `--target default` was
+     tried first and rejected (`Could not find target with name "default"` — no default target exists
+     once library fields are present).
+  2. **`engines.node: ">=24.0.0"` made Parcel infer a *Node* target**, so it externalized every
+     `node_modules` import and emitted an `<script type=importmap>`. The bundle was 5.16 kB and began
+     `import"react";import"react-dom/client"` — it would have 404'd in a browser. Fixed by adding a
+     `browserslist` field to `package.json` (`> 0.5%`, `last 2 versions`, `not dead`), which tells
+     Parcel the demo-site targets browsers. `engines.node` is untouched — 000001 Task 2 calls it a
+     management mandate. **Verified this does not perturb the library build:** `build.js` passes an
+     explicit `targets: { node: "20" }` to `@babel/preset-env`, which takes precedence over
+     `browserslist`, and a rebuild produced **byte-identical** `dist/` output (all four files' MD5s
+     unchanged), with `npm run test:ci` still **26 passed (26)**.
+  3. **`sideEffects: false` (000001 Task 8) was tree-shaking the demo-site's CSS away.** No `.css`
+     bundle and no font asset were emitted, because `import "normalize.css"` / `import "./index.css"`
+     are side-effect-only imports and the package declared it had none. That claim is true of the
+     library but false of the demo-site. Narrowed to `"sideEffects": ["demo-site/**"]`, which
+     preserves consumer tree-shaking exactly — no file in the published tarball matches the glob, so
+     `index.mjs`/`index.cjs` are still declared side-effect-free. Isolated by bisecting the manifest
+     field-by-field across four build variants; `exports` was ruled out as a contributor.
+  4. **`demo-site/index.html` used `<script type="text/javascript">`**, which Parcel 2 treats as a
+     classic script and rejects with `Browser scripts cannot have imports or exports`. Parcel 1
+     accepted it. Changed to `<script type="module" src="./index.js">` — the only edit made to a
+     demo-site file outside Task 2.
+  Also added `.parcel-cache` to `.gitignore`: Parcel 2 renamed its cache directory and the existing
+  entry only covers Parcel 1's `.cache`, so without this Task 5 would commit the cache into the repo.
+  **Post-fix smoke build result** (scratch directory, `docs/` untouched): builds clean in ~540 ms and
+  emits exactly `index.html`, one `demo-site.*.js` (284.9 kB, React and the barcode library both
+  genuinely bundled — zero bare imports, no import map), one `demo-site.*.css`, the hashed
+  `digital.*.ttf` font, and the hashed `logo.*.svg` — which is AC 5's expected shape, with
+  `social.png` still to come from this script's copy step. `npm run pack:preview` re-verified after
+  the manifest edits: still exactly five tarball entries, unchanged.
+- 2026-08-13 — Completed. Replaced both scripts in `package.json` with the specified strings verbatim:
+  `start-site` swaps Parcel 1's `--out-dir` for `--dist-dir`, and `build-site` is now the three-step
+  chain — `node -e` `fs.rmSync('docs',…)` clean → `parcel build … --dist-dir docs --public-url
+  https://tecuity.github.io/barcode-generator/` → `node -e` `fs.copyFileSync` restoring
+  `demo-site/social.png` to `docs/social.png`. Task 1's install resolved `parcel` to `^2.16.4`, the
+  exact version the flags were verified against. No `@emotion/babel-plugin`, JSX pragma, or
+  Babel/Parcel config was added, and no `shx`/`rimraf` dependency was introduced. **Not executed
+  here** — running `build-site` regenerates `docs/`, which is Task 5's deliverable, and Task 5 was
+  excluded from this run; the pre-upgrade `docs/` (still carrying both React 16-era bundles,
+  `demo-site.51f96e0f.js` and `demo-site.e9ff0f45.js`) is therefore untouched, and AC 3/4/5 remain
+  open pending Task 5.
 - 2026-08-11 — Research completed: verified `--dist-dir`/`--public-url` against `parcel@2.16.4`;
   removed the "add `@emotion/babel-plugin` if styling breaks" conditional after confirming the
   demo-site has no `css` prop usage, so it could never fire; and added the `docs/` clean plus the
@@ -324,7 +405,7 @@ Commit the regenerated `docs/` bundle as part of this task (GitHub Pages serves 
 
 ---
 
-## Task 6: [ ] Update the root `README.md` for the modernized package
+## Task 6: [x] Update the root `README.md` for the modernized package
 
 **Task:** The root [README.md](../../../../README.md) still documents the v1.2.1 package and is not
 touched by any task in 000001 or 000003. Bring it in line with what 000001 shipped. This runs last in
@@ -410,6 +491,31 @@ wording is required.
 **Acceptance Criteria:** AC 6
 
 **History:**
+- 2026-08-13 — Completed. All six edits made: (1) the Node 24 requirements note added under
+  `## Installation` above the install command; (2) the `yarn add` alternative and its `or` line
+  removed, leaving `npm install @tecuity/barcode-generator` as the single blessed path; (3) the CJS
+  `require` form added to `## Usage` after the existing ESM example, which stays primary; (4) a
+  two-sentence `### TypeScript` subsection added after the API reference table; (5) the API table
+  verified against `src/index.d.ts` — `spacing` 5, `raw` false, `height` 172.89 all agree, so it was
+  a genuine no-op as predicted and the table is unchanged; (6) the `## Development` and
+  `### Releasing` sections added between `## API Reference:` and `## Contributors ✨`. The
+  `ALL-CONTRIBUTORS-LIST` block and its `prettier-ignore`/`markdownlint` comments, the three badges,
+  the logo image, the demo-site link, and the "browser, NodeJS, or anywhere else" intro claim were
+  all left untouched, as instructed.
+- 2026-08-13 — **One deviation from this task's specified README text, taken under the task's own
+  "the README follows `package.json`, not this task" directive.** The `npm test` row was specified as
+  "Runs the Vitest suite in watch mode," but `package.json` defines `"test": "vitest run"` — a
+  single-pass run, not a watcher. 000001 Task 11's History records this as a deliberate change made
+  at Braden's direction on 2026-08-13 (bare `vitest` starts the file watcher and never exits, hanging
+  `np`, CI, or an agent), so the task text here was simply written before that decision landed. The
+  row now reads "Single-pass run of the Vitest suite. Watch mode is `npx vitest`." — which is what
+  000001 Task 11 says watch mode costs. Every other documented command was cross-checked against the
+  live `scripts` block and matches verbatim: `build`, `test:ci`, `start-site`, `build-site`,
+  `pack:preview`, `release:preview`, and `release` (`np`, so `npm run release -- minor` → `np minor`).
+  The `pack:preview` row's "Writes nothing" was also softened to "Writes no tarball," since the script
+  is `npm run build && npm run copy-manifest && npm pack ./dist --dry-run` — only the `npm pack` is a
+  dry run; the build genuinely writes `dist/`. The closing "gated on `test:ci`" claim was verified
+  against `np.testScript: "test:ci"` in `package.json`.
 - 2026-08-11 — Task added. No task in 000001, 000002, or 000003 updated the root README, leaving it
   describing the pre-modernization package. Placed at the end of 000002 rather than in 000001 so the
   documentation lands after both the library and the demo-site have been verified against it; noted

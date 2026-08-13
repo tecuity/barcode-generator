@@ -12,7 +12,9 @@
       "default": "./index.cjs"
     }
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "demo-site/**"
+  ],
   "files": [
     "index.cjs",
     "index.mjs",
@@ -28,10 +30,20 @@
   "engines": {
     "node": ">=24.0.0"
   },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "targets": {
+    "main": false,
+    "module": false,
+    "types": false
+  },
   "scripts": {
     "build": "node process.js && node build.js",
-    "start-site": "parcel demo-site/index.html --out-dir site-dist",
-    "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/",
+    "start-site": "parcel demo-site/index.html --dist-dir site-dist",
+    "build-site": "node -e \"require('fs').rmSync('docs',{recursive:true,force:true})\" && parcel build demo-site/index.html --dist-dir docs --public-url https://tecuity.github.io/barcode-generator/ && node -e \"require('fs').copyFileSync('demo-site/social.png','docs/social.png')\"",
     "pretest": "node process.js",
     "test": "vitest run",
     "pretest:ci": "node process.js",
@@ -52,16 +64,16 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
-    "@emotion/core": "^10.0.27",
-    "@emotion/styled": "^10.0.27",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@rollup/plugin-babel": "^7.1.0",
     "@rollup/plugin-json": "^6.1.0",
     "all-contributors-cli": "^6.13.0",
     "normalize.css": "^8.0.1",
     "np": "^12.0.1",
-    "parcel": "^2.0.0-beta.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "parcel": "^2.16.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "rollup": "^4.62.4",
     "vitest": "^4.1.10"
   }
