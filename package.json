@@ -9,11 +9,15 @@
     "url": "https://github.com/tecuity/barcode-generator"
   },
   "homepage": "https://tecuity.github.io/barcode-generator/",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "build": "node process.js && node build.js",
     "start-site": "parcel demo-site/index.html --out-dir site-dist",
     "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/",
-    "postversion": "cp -f package.json dist",
+    "copy-manifest": "node -e \"require('node:fs').copyFileSync('package.json','dist/package.json')\"",
+    "postversion": "npm run build && npm run copy-manifest",
     "release": "npx np"
   },
   "publishConfig": {

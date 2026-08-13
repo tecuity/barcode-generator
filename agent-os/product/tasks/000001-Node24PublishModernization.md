@@ -1,6 +1,6 @@
 # 000001-Node24PublishModernization - Tasks
 
-## Braden Steiner - Last Modified: 2026-08-11
+## Braden Steiner - Last Modified: 2026-08-13
 
 ## Story Description
 
@@ -220,7 +220,7 @@ but harmless — `process.js` filters it via the `.includes('.svg')` guard. Opti
 
 ---
 
-## Task 1.5: [ ] Capture the v1.2.1 output baseline as a regression fixture
+## Task 1.5: [x] Capture the v1.2.1 output baseline as a regression fixture
 
 > **Do this FIRST — before Task 4 changes the build toolchain.** Numbered `1.5` deliberately so the
 > existing Task 2–18 numbering and all cross-references stay intact.
@@ -283,6 +283,18 @@ Node v24.16.0, so fixture parity holds.
 **Acceptance Criteria:** AC 11
 
 **History:**
+- 2026-08-13 — Completed. Captured from the published tarball (`npm pack
+  @tecuity/barcode-generator@1.2.1` → `tar -xzf` → `require("./package/index.js")`, which returns the
+  generator function directly). Wrote `test/fixtures/baseline-1.2.1.json` with **16 cases** — each of
+  the 8 specified inputs recorded twice, once with the stated options and once with `raw: true` added
+  (`["1234567",{}]` / `["1234567",{"raw":true}]`, … , `["1234567",{"spacing":10,"height":200}]` /
+  `["1234567",{"spacing":10,"height":200,"raw":true}]`). Keys are `JSON.stringify([input, opts])`;
+  `commit` is `99bc623`, `captured` is `2026-08-13`. Verified the captured values behave as the task
+  describes: `"abc-123"` → 9 glyphs (lowercase and `-` all render), `"A#B.C"` → 5 glyphs (`#` and `.`
+  filtered), `"A*B"` → 4 glyphs (embedded `*` stripped), `""` → 2 glyphs (`*`-wrapped), the
+  `{spacing:10,height:200}` case carries `viewBox="0 0 912.42 200"` vs the default `"0 0 867.42
+  172.89"`, and every base64 case decodes to its matching `raw` case. Captured on Node v24.16.0 /
+  npm 11.13.0.
 - 2026-08-11 — Research completed: resolved the "local build **or** published tarball" directive in
   favour of the published 1.2.1 tarball (`node_modules/` is absent and the Rollup 1.31 toolchain is
   unlikely to install on Node 24). Also corrected a factual error in the input set — `"abc-123"` was
@@ -292,7 +304,7 @@ Node v24.16.0, so fixture parity holds.
 
 ---
 
-## Task 2: [ ] Add `.nvmrc` and an `engines` floor
+## Task 2: [x] Add `.nvmrc` and an `engines` floor
 
 **Task:** Pin the maintainer/publish Node version and declare a supported floor.
 
@@ -320,6 +332,10 @@ owned by 000003 Task 11; leave that file to it.
 **Acceptance Criteria:** AC 1
 
 **History:**
+- 2026-08-13 — Completed. Added `.nvmrc` containing `24` and an `engines.node: ">=24.0.0"` block to
+  `package.json` (placed after `homepage`, before `scripts`). No `.npmrc` created and no
+  `engine-strict` set, per the research decision above. The local Node is v24.16.0, so the floor is
+  satisfied here; `npm run copy-manifest` ran without an `EBADENGINE` warning.
 - 2026-08-11 — Research completed: resolved the "consider adding `engine-strict=true`" directive.
   npm reads `engine-strict` from the installing project's config, not from a dependency's `.npmrc`,
   so it cannot enforce the floor on consumers; the `engines` field alone is the ceiling for a
@@ -328,7 +344,7 @@ owned by 000003 Task 11; leave that file to it.
 
 ---
 
-## Task 3: [ ] Make the `postversion` copy cross-platform
+## Task 3: [x] Make the `postversion` copy cross-platform
 
 **Task:** `postversion` currently runs `cp -f package.json dist`, which relies on a Unix `cp` and
 fails in native Windows shells (`cmd`/PowerShell), breaking the release flow on a Windows publish
@@ -368,6 +384,13 @@ If the build fails during a release, the version commit has already been made �
 **Acceptance Criteria:** AC 9, AC 12
 
 **History:**
+- 2026-08-13 — Completed. Replaced `"postversion": "cp -f package.json dist"` with the two scripts
+  specified: `copy-manifest` (`node -e "require('node:fs').copyFileSync('package.json','dist/package.json')"`)
+  and `postversion` (`npm run build && npm run copy-manifest`). No shell-helper package added.
+  Verified the embedded-quote form survives npm's Windows shell: with a stub `dist/` present,
+  `npm run copy-manifest` produced `dist/package.json` under PowerShell on Node v24.16.0 / npm
+  11.13.0. The `postversion` chain was not run end-to-end here because `npm run build` still needs
+  the Phase 1 toolchain (Rollup 4 is not installed until Task 4); Task 16 exercises the full chain.
 - 2026-08-11 — Extracted the `copyFileSync` call into a reusable `copy-manifest` script so Task 14.5's
   `pack:preview` calls the same step instead of duplicating it. `postversion` behavior is unchanged.
 - 2026-08-11 — Research completed: resolved the "pick one" directive by choosing the zero-dependency
@@ -1209,7 +1232,7 @@ confirm it resolves and renders — this validates the real published artifact, 
 
 ---
 
-## Task 19: [ ] Untrack `src/svg/.DS_Store`
+## Task 19: [x] Untrack `src/svg/.DS_Store`
 
 **Correction Note:** This task corrects a leftover in Task 1: the `STAR.svg` rename landed correctly
 and AC 2 is satisfied, but the tracked macOS `src/svg/.DS_Store` artifact was recorded as an
@@ -1234,3 +1257,10 @@ No build change is needed either — [process.js:8](../../../../process.js#L8) a
 **Acceptance Criteria:** AC 2
 
 **History:**
+- 2026-08-13 — Completed. Ran `git rm --cached src/svg/.DS_Store`; `git ls-files src/svg` no longer
+  lists it and `git status` does not report it as untracked, confirming `.gitignore`'s trailing
+  `.DS_Store` line already covers it — no `.gitignore` change needed. `node process.js` still
+  produces a 65-entry map with `*` → `STAR.svg`, `' '`, `a`–`z` and `-` all present. Note: the
+  regenerated map differed from the committed `svgMap.json` in **key order only** (`fs.readdir`
+  order) — same 65 keys, zero value differences — so the working-tree copy was restored and left for
+  Task 6, which owns regenerating and committing it.
