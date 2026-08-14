@@ -1548,7 +1548,7 @@ changed generator output — investigate in Task 5/7 before publishing; do not u
 
 ---
 
-## Task 17: [ ] Inspect the publish tarball
+## Task 17: [x] Inspect the publish tarball
 
 **Task:** Confirm the package that will actually be published is correct **before** publishing.
 Because `np` publishes from `dist/` with a copied `package.json`, verify the paths resolve from the
@@ -1570,6 +1570,39 @@ inside the tarball). Fix any path mismatch back in Task 8.
 **Acceptance Criteria:** AC 6, AC 9, AC 12
 
 **History:**
+- 2026-08-14 — Completed. **No path mismatch found, so nothing went back to Task 8.** Ran
+  `npm run pack:preview` on Node **v24.16.0** / npm 11.13.0; the whole chain (build → `copy-manifest` →
+  `npm pack ./dist --dry-run`) exited **0** and listed exactly the five expected entries — `index.cjs`
+  (54.3 kB), `index.d.ts` (521 B), `index.mjs` (54.3 kB), `index.umd.js` (56.6 kB), `package.json`
+  (1.8 kB); 11.2 kB packed / 167.5 kB unpacked, total files 5.
+  - **Path resolution checked mechanically, not by eye.** Took npm's own
+    `npm pack ./dist --dry-run --json` file list as the authority and cross-checked every path the
+    manifest declares against it — all **7** declared paths (`main`, `module`, `types`, and each of the
+    four `exports["."]` conditions: `types`, `import`, `require`, `default`). Each one **has no `dist/`
+    prefix** and **is present in the tarball**. Also asserted tarball contents == `files[]` +
+    `package.json` exactly (so nothing extra leaked in and nothing declared is missing) and that
+    `dist/package.json` is **byte-identical** to the repo-root `package.json`, which is the file `np`
+    will copy. 17/17 assertions passed.
+  - **AC 12's "writing nothing" confirmed.** No `.tgz` was produced in the repo root or in `dist/`. The
+    single `tecuity-barcode-generator-1.2.1.tgz` present at the root is the **pre-existing** Task 1.5
+    capture artifact (4,834 B, contents `package/index.js` + `package/package.json`, i.e. the *published*
+    1.2.1 package, not this build) — its mtime was unchanged across the run. It is gitignored by
+    `.gitignore`'s `*.tgz`, and `git status` was clean before and after.
+  - **Reproducibility note:** the dry-run shasum `15a5b80d5baae1e4bd7b8fca9e1f655aa5cd352e` is identical
+    to the tarball Task 10 packed and installed, so the artifact Task 10 verified in the React 19 sandbox
+    is bit-for-bit the artifact this task inspected.
+  - **Extra check beyond the task's list — the UMD bundle was executed for the first time.** Nothing in
+    this plan had ever *run* `dist/index.umd.js`; Task 5 only confirmed the wrapper carried the
+    `barcodeGenerator` name. Loaded it in a fresh `node:vm` context with no `module`/`exports` so it takes
+    its **browser-global** branch: the global resolves to a `function` and reproduces all **16** Task 1.5
+    fixture cases (`umd global parity OK 16`). Worth recording for anyone using the CDN path: the wrapper
+    prefers `globalThis` (`global = typeof globalThis !== 'undefined' ? globalThis : global || self`), so
+    the export lands on `globalThis.barcodeGenerator` — in a browser that is `window.barcodeGenerator`, so
+    the legacy `<script>` use case is fine. It is deliberately **not** referenced by
+    `main`/`module`/`types`/`exports`; it ships via `files` only, which is by design per Task 5.
+  - **Cosmetic, not a failure:** under PowerShell 5.1 the run surfaces a `NativeCommandError` wrapper
+    around npm's `npm notice` stderr lines. That is the documented PowerShell artifact of redirecting a
+    native executable's stderr, not a pack error — the script exited 0 and the listing is complete.
 - 2026-08-11 — Replaced the three-step manual sequence (`build`, copy `package.json`,
   `cd dist && npm pack --dry-run`) with Task 14.5's `npm run pack:preview`, which performs the same
   steps and is portable across `cmd`/PowerShell/`sh`.
