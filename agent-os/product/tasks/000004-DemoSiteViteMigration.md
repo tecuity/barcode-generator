@@ -563,20 +563,24 @@ committed and must not arrive now); `emptyOutDir` should already have removed th
 
 ---
 
-## Task 9: [x] Confirm the README needs no change
+## Task 9: [x] Reconcile the README's demo-site rows with the migration
 
-**Task:** Expected to be a **no-op check**, recorded rather than skipped. The `## Development` table
-that 000002 Task 6 added documents `npm run start-site` as "Serves the demo-site locally. Run
-`npm run build` first — the site imports `dist/`." and `npm run build-site` as "Rebuilds the `docs/`
-GitHub Pages bundle." Both remain accurate after this story — the script *names* are unchanged and only
-their implementations differ, and the `npm run build` prerequisite still holds.
+**Task:** Review, and **change the README where the migration makes a more accurate statement
+possible.** The `## Development` table that 000002 Task 6 added documents `npm run start-site` as
+"Serves the demo-site locally. Run `npm run build` first — the site imports `dist/`." and
+`npm run build-site` as "Rebuilds the `docs/` GitHub Pages bundle." Neither makes a Parcel-specific
+claim, so nothing here is *wrong* after this story — the script names are unchanged, only their
+implementations differ, and the `npm run build` prerequisite still holds.
 
-Read the section and confirm it makes no Parcel-specific claim. Correct it only if it does; otherwise
-record "no change required" in History. Do not add a Vite mention for its own sake — the README
-documents commands a maintainer runs, not the toolchain behind them.
+Read the section, and correct anything the migration falsifies. Beyond that, an edit is **allowed but
+not required**: the bar is whether it tells a maintainer something true and useful that the migration
+newly makes knowable — the dev server's URL being the obvious candidate, since Vite serves on a fixed
+default port where Parcel used a different one. Do **not** name the bundler for its own sake; the
+README documents the commands a maintainer runs, not the toolchain behind them. A no-op outcome is a
+legitimate result here — record whichever way it lands, with the reasoning.
 
 **Files:**
-- `README.md` *(expected: no change)*
+- `README.md`
 
 **Acceptance Criteria:** None directly — documentation consistency
 
@@ -592,3 +596,18 @@ documents commands a maintainer runs, not the toolchain behind them.
   so only implementations differ, exactly as this task anticipated. No Vite mention was added for its
   own sake — the README documents the commands a maintainer runs, not the toolchain behind them.
   `README.md` is byte-unchanged by this story.
+- 2026-08-14 — **Superseded in part: the README did change, and this task was rewritten to allow it.**
+  The entry above is accurate as of when it was written but no longer describes the tree. In commit
+  `2e0d982` Braden edited the `npm run start-site` row to read "Serves the demo-site at
+  `http://localhost:5173`. Run `npm run build` first — the site imports `dist/`." That is a Vite-specific
+  fact (5173 is Vite's default; Parcel served on 1234), which this task's original text had prohibited as
+  "a Vite mention for its own sake." The prohibition was too broad: the port is not toolchain trivia but
+  the address a maintainer actually opens, and it is knowable only because the bundler changed. The task
+  text and title above were rewritten accordingly — a README change is now explicitly permitted where it
+  states something true and useful, with a no-op still a legitimate outcome. **The no-op finding itself
+  still stands on its own terms:** nothing in the README was *falsified* by this story, so no correction
+  was ever required; the edit that landed is an improvement, not a fix. Note the same commit made three
+  further README changes — a `MIGRATING.md` link, a CJS "no `.default` to unwrap" clarification, and a
+  new UMD `<script>` section. Those document the **published package** (000001 territory), not the
+  demo-site, and fall outside this task's scope; they were reviewed and verified accurate against
+  `build.js` and the built bundles, but they are not this task's work and are not claimed as such.
