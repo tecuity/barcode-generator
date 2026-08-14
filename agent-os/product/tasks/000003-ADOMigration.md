@@ -1,6 +1,6 @@
 # 000003-ADOMigration - Tasks
 
-## Braden Steiner - Last Modified: 2026-07-10
+## Braden Steiner - Last Modified: 2026-08-14
 
 ## Story Description
 
@@ -38,6 +38,9 @@ not block the migration.)
    without errors.
 6. The GitHub repository is archived with a redirect notice.
 7. Local developer auth for `@tecuity/*` packages from the new feed is documented.
+8. No repo documentation or `package.json` metadata still points at the decommissioned GitHub repo or
+   assumes public-npm distribution — `README.md`, `MIGRATING.md`, and `repository`/`homepage` are
+   updated, and every URL in them resolves.
 
 ---
 
@@ -66,6 +69,44 @@ The scoped entry routes only `@tecuity/*` to the feed and leaves everything else
 
 **Verify publish before updating consumers.** Do not start Phase 4 until Task 16 confirms the
 package is reachable from the new feed.
+
+**The repo's own documentation assumes GitHub + public npm throughout, and this migration invalidates
+both assumptions.** This is easy to miss because the docs keep *rendering* fine — the URLs simply stop
+being true. Six places are affected (all verified against the tree on 2026-08-14), and Task 19.5 owns
+fixing them:
+- [README.md](../../../../README.md) line 1 — the logo is hotlinked from
+  `raw.githubusercontent.com/tecuity/barcode-generator/master/logo.png`, i.e. served by the repo this
+  story archives.
+- [README.md](../../../../README.md) line 3 — three badges, all of which read from the abandoned
+  sources: `shields.io/npm/v` (pins at the last public version forever once publishing moves),
+  `shields.io/github/license` (reads the archived GitHub repo), and `shields.io/bundlephobia`
+  (resolves via public npm).
+- [README.md](../../../../README.md) — the `<script>`/UMD example added on 2026-08-14 points at
+  **`https://unpkg.com/@tecuity/barcode-generator/index.umd.js`**. unpkg serves *public npm only*, so
+  this URL silently stops reflecting new versions the moment Task 12 repoints `publishConfig`, and
+  breaks outright if Task 2 chooses to deprecate the public package. A private Azure Artifacts feed
+  has no CDN equivalent — the example must either be repointed at an approved internal host or
+  rewritten to show a local/vendored path with the CDN claim dropped.
+- [README.md](../../../../README.md) Installation — `npm install @tecuity/barcode-generator` with no
+  mention of the scoped `.npmrc` or the PAT. After Phase 3 that command 401s for anyone who has not
+  done Task 15's auth setup, which makes the first instruction in the README wrong for every new
+  developer.
+- [MIGRATING.md](../../../../MIGRATING.md) — written for public-npm consumers; its install-failure
+  matrix (`EBADENGINE` warn vs. `--engine-strict` abort) stays correct, but it needs the feed +
+  auth prerequisite so a 401 is not mistaken for the engine gate.
+- [package.json](../../../../package.json) — `repository.url` points at
+  `https://github.com/tecuity/barcode-generator`, and `homepage` points at the GitHub Pages demo
+  (`https://tecuity.github.io/barcode-generator/`). Both ship inside the published tarball via
+  `copy-manifest`, so they are consumer-visible metadata, not just repo cosmetics.
+
+**Archiving GitHub may take the demo-site down with it — confirm before Task 21.** `homepage` and the
+README's demo link both point at `https://tecuity.github.io/barcode-generator/`, which is GitHub Pages
+serving the committed [docs/](../../../../docs/) bundle. That bundle is the entire deliverable of
+[000002](./000002-DemoSiteReact19Upgrade.md) and [000004](./000004-DemoSiteViteMigration.md) — the
+React 19 + Vite rebuild that finally moved the live page off React 16. Archiving a public repo is
+documented as leaving Pages serving, but *verify it rather than assume*, and if Pages does go dark,
+decide where the demo lives (or that it is retired) instead of leaving two documented URLs pointing at
+nothing.
 
 ---
 
@@ -467,6 +508,73 @@ Without this, consumer CI fails with 401 on `@tecuity/barcode-generator`.
 ---
 
 # Phase 5 — Decommission GitHub
+
+## Task 19.5: [ ] Repoint the repo's own documentation and metadata off GitHub and public npm
+
+> Numbered `19.5` deliberately so the existing Task 20/21 numbering and all cross-references stay
+> intact — the same convention 000001 uses for its Tasks 1.5, 9.5 and 14.5.
+
+**Task:** The migration is not done when the package publishes from the feed — the repo still *tells*
+every reader to use GitHub and public npm. See the Developer Notes entry for the full inventory and why
+each item is wrong; this task fixes all six. Do it **after** Task 16 confirms the feed works (so the
+new install instructions are true when written) and **before** Task 20/21 archive GitHub (so no one is
+reading archived docs that point at themselves).
+
+1. **`README.md` — Installation.** Add the feed prerequisite ahead of the `npm install` line: the
+   scoped `.npmrc` (Task 11) and the PAT / `vsts-npm-auth` setup (Task 15), with a pointer to wherever
+   Task 15's onboarding doc landed. Note the 401 that appears without it, so the failure is
+   self-diagnosing. Keep the existing **Node 24 / `EBADENGINE`** note — that is unrelated to the feed
+   and still correct.
+2. **`README.md` — the UMD `<script>` example.** Decide and apply one of:
+   - repoint at an approved internal host, if one exists that can serve the feed's tarball contents;
+   - rewrite it to a local/vendored path (`<script src="./index.umd.js">`) and drop the CDN claim; or
+   - remove the example, if `<script>`-tag consumption is not a use case worth documenting for an
+     internal-only package.
+   Whichever is chosen, the UMD build itself still ships and the global is still `barcodeGenerator`, so
+   **do not** delete the "global is `barcodeGenerator`" fact — [MIGRATING.md](../../../../MIGRATING.md)
+   documents it as a breaking change from 1.2.1 and the two files must not disagree.
+3. **`README.md` — badges and logo.** Replace or remove the three `shields.io` badges (npm version,
+   GitHub license, bundlephobia) — none can read a private feed. Azure DevOps offers a build-status
+   badge for the Task 10 pipeline, which is a genuine replacement for the CI signal; license is better
+   stated as plain text than as a badge pointing at an archived repo. Move the hotlinked
+   `raw.githubusercontent.com` logo to a committed in-repo path and reference it relatively.
+4. **`MIGRATING.md`.** Add the feed + auth prerequisite so a 401 is not misread as the Node engine
+   gate. Leave the parity, entry-point, `.default`, UMD-global and `btoa` sections alone — they
+   describe the package, not its distribution channel, and remain accurate.
+5. **`package.json`.** Point `repository.url` at the Azure DevOps repo. Resolve `homepage` per the
+   GitHub Pages finding in Developer Notes — repoint it if the demo moves, remove it if the demo is
+   retired, leave it if Pages is confirmed to keep serving. Both fields ship to consumers inside the
+   tarball via `copy-manifest`, so treat this as a published-metadata change: re-run
+   `npm run pack:preview` afterward and confirm the copied `dist/package.json` carries the new values.
+6. **Contributors section.** `README.md`'s all-contributors table and `.all-contributorsrc` reference
+   GitHub avatars and commit URLs. Archived repos stay readable, so these keep resolving — decide
+   whether to leave them (simplest, and preserves attribution) or migrate them, and record the choice.
+   Do not silently drop contributor attribution.
+
+**Verify by clicking, not by reading.** Open every URL left in `README.md` and `MIGRATING.md` after
+the edits and confirm each one resolves. That is the whole point of the task — the failure mode here is
+documentation that renders perfectly while being false.
+
+**Files:**
+- `README.md`
+- `MIGRATING.md`
+- `package.json` — `repository.url`, `homepage`
+- `.all-contributorsrc` *(only if step 6 chooses to migrate)*
+- `logo.png` — already committed at the repo root; referenced relatively instead of via
+  `raw.githubusercontent.com`
+
+**Acceptance Criteria:** AC 8
+
+**History:**
+- 2026-08-14 — Task created. Surfaced while writing
+  [MIGRATING.md](../../../../MIGRATING.md) for the 1.3.0 release: that guide's `<script>` example
+  needed a CDN URL, `unpkg` was the only correct answer for a public-npm package, and it became
+  apparent that this story repoints the publish target without repointing any of the documentation
+  that describes it. Audited the tree and found six affected places plus the GitHub Pages question;
+  added AC 8 and the Developer Notes inventory alongside this task. Nothing is fixed yet — the edits
+  cannot be written until the feed URL and the Pages decision are known.
+
+---
 
 ## Task 20: [ ] Add a redirect notice to the GitHub repo
 

@@ -12,9 +12,7 @@
       "default": "./index.cjs"
     }
   },
-  "sideEffects": [
-    "demo-site/**"
-  ],
+  "sideEffects": false,
   "files": [
     "index.cjs",
     "index.mjs",
@@ -30,20 +28,10 @@
   "engines": {
     "node": ">=24.0.0"
   },
-  "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead"
-  ],
-  "targets": {
-    "main": false,
-    "module": false,
-    "types": false
-  },
   "scripts": {
     "build": "node process.js && node build.js",
-    "start-site": "parcel demo-site/index.html --dist-dir site-dist",
-    "build-site": "node -e \"require('fs').rmSync('docs',{recursive:true,force:true})\" && parcel build demo-site/index.html --dist-dir docs --public-url https://tecuity.github.io/barcode-generator/ && node -e \"require('fs').copyFileSync('demo-site/social.png','docs/social.png')\"",
+    "start-site": "vite",
+    "build-site": "vite build",
     "pretest": "node process.js",
     "test": "vitest run",
     "pretest:ci": "node process.js",
@@ -68,13 +56,14 @@
     "@emotion/styled": "^11.14.1",
     "@rollup/plugin-babel": "^7.1.0",
     "@rollup/plugin-json": "^6.1.0",
+    "@vitejs/plugin-react": "^6.0.5",
     "all-contributors-cli": "^6.13.0",
     "normalize.css": "^8.0.1",
     "np": "^12.0.1",
-    "parcel": "^2.16.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "rollup": "^4.62.4",
+    "vite": "^8.2.1",
     "vitest": "^4.1.10"
   }
 }

@@ -26,6 +26,9 @@ Requires **Node 24 or newer** (`engines.node: ">=24.0.0"`). Consumers on Node 20
 npm install @tecuity/barcode-generator
 ```
 
+Upgrading from 1.2.1? See [MIGRATING.md](MIGRATING.md) — the entry points, the UMD global, and the
+Node floor all changed.
+
 ## Usage
 
 For a default usage, just import and call the generator with a string like this:
@@ -36,12 +39,23 @@ import generateBarcode from '@tecuity/barcode-generator'
 const barcode = generateBarcode("1234567")
 ```
 
-The package also ships a CommonJS build, so `require` works too:
+The package also ships a CommonJS build, so `require` works too — and it returns the generator
+function directly, not a namespace object (there is no `.default` to unwrap):
 
 ```js
 const generateBarcode = require('@tecuity/barcode-generator')
 
 const barcode = generateBarcode("1234567")
+```
+
+There's a UMD build at `index.umd.js` as well, for loading straight from a `<script>` tag. It exposes
+the generator as the global `barcodeGenerator`:
+
+```html
+<script src="https://unpkg.com/@tecuity/barcode-generator/index.umd.js"></script>
+<script>
+  const barcode = barcodeGenerator("1234567")
+</script>
 ```
 
 And that's it! By default the generator will return a barcode as a base64-encoded
@@ -78,7 +92,7 @@ Requires Node 24 (`nvm use 24` — see `.nvmrc`), then `npm install`.
 | `npm run build` | Regenerates the SVG character map and bundles `dist/` (ESM + CJS + UMD + types). |
 | `npm test` | Single-pass run of the Vitest suite. Watch mode is `npx vitest`. |
 | `npm run test:ci` | Single-pass test run, used by CI and gated on before every release. |
-| `npm run start-site` | Serves the demo-site locally. Run `npm run build` first — the site imports `dist/`. |
+| `npm run start-site` | Serves the demo-site at `http://localhost:5173`. Run `npm run build` first — the site imports `dist/`. |
 | `npm run build-site` | Rebuilds the `docs/` GitHub Pages bundle. |
 
 ### Releasing

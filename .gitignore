@@ -72,10 +72,6 @@ typings/
 .env
 .env.test
 
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
 # Next.js build output
 .next
 
@@ -104,5 +100,4 @@ dist
 # TernJS port file
 .tern-port
 
-/site-dist
 .DS_Store

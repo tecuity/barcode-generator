@@ -377,7 +377,7 @@ names — none of which apply here.
 
 ---
 
-## Task 5: [ ] Verify the demo runs and rebuild `docs/`
+## Task 5: [x] Verify the demo runs and rebuild `docs/`
 
 **Task:** End-to-end verification:
 
@@ -398,10 +398,87 @@ Commit the regenerated `docs/` bundle as part of this task (GitHub Pages serves 
 
 **Files:**
 - `docs/**` — regenerated build output
+- `demo-site/index.js` *(added 2026-08-13 — `logo.svg` URL import; see History)*
+- `demo-site/GithubCorner.js` *(added 2026-08-13 — `class` → `className`; see History)*
 
 **Acceptance Criteria:** AC 3, AC 4, AC 5
 
 **History:**
+- 2026-08-13 — **The regenerated `docs/` bundle was deliberately NOT committed. This task's
+  verification stands in full; only the commit step is deferred — to
+  [000004 Task 8](./000004-DemoSiteViteMigration.md).** Everything the entry below records was executed
+  and checked against AC 3/4/5 as written, and `docs/` was left correct on disk. What is not in the repo
+  is the artifact. Approved by Braden on 2026-08-13, after
+  [000004-DemoSiteViteMigration.md](./000004-DemoSiteViteMigration.md) was written and its migration
+  prototyped end-to-end: 000004 replaces Parcel with Vite and regenerates `docs/` under a different
+  layout (hashed assets under `docs/assets/`, no source maps), so committing this Parcel 2 output would
+  add ~2.5 MB of blobs — including a single 2.1 MB `demo-site.543c762d.js.map` — to git history
+  permanently, to be superseded before anything ever served them. `docs/` is a regenerable build
+  artifact, so deferring its commit costs nothing that cannot be reproduced by re-running
+  `npm run build-site`; that is what makes this safe, and it is the reason the same argument does not
+  apply to the two source fixes below. **Consequences to be aware of:** the committed `docs/` still
+  holds the React 16-era Parcel 1 bundles (1.71 MB across ten files), so **AC 4 and AC 5 are verified
+  but not yet shipped** — the live GitHub Pages site stays on the old bundle until 000004 Task 8 lands,
+  and the filenames cited in the entry below (`demo-site.543c762d.js`, `demo-site.c0a2d9b0.css`,
+  `digital.7e4dbc27.ttf`, `logo.06ac5d38.svg`) exist only in the working tree, never in a commit. If
+  000004 is abandoned or stalls, close this out by re-running `npm run build-site` on Parcel and
+  committing the result — nothing about that path has been foreclosed.
+- 2026-08-13 — Completed, but **two further Parcel-2/React-19 defects had to be fixed first, both in
+  demo-site source files outside this task's original `Files` list. Flag for review.** Neither was
+  anticipated by any task in this story; both were invisible to Task 4's smoke build, which checked
+  only the emitted file list and never rendered the page. Verified end-to-end in real headless Chrome
+  (Chrome 151, driven over the DevTools Protocol), not by reading the bundle.
+  1. **`import logo from './logo.svg'` silently resolved to `{}`**, so the site's title logo rendered
+     as `<img src="[object Object]">` — a broken image where the "Barcode Generator" wordmark belongs.
+     Parcel 1 returned the asset URL for a JS-side SVG import; **Parcel 2 does not** — it emits the
+     hashed `logo.*.svg` bundle and registers its URL in the bundle manifest, but compiles the
+     importing binding to an empty module. Confirmed **not** a config problem: bisected all six
+     library-manifest fields (`sideEffects`, `targets`, `browserslist`, `main`/`module`/`types`,
+     `exports`) with a full rebuild each, and every variant reproduced `src:{}` — then reproduced it in
+     a pristine two-file Parcel project with a bare `package.json`, which rules the repo's manifest out
+     entirely. Fixed in [demo-site/index.js](../../../../demo-site/index.js) by replacing the import
+     with `const logo = new URL('./logo.svg', import.meta.url).href` — the standards-based form Parcel 2
+     documents for URL dependencies, and portable to other bundlers. Parcel's own `url:./logo.svg`
+     scheme was tested as the alternative and renders identically (both compile to the same manifest
+     lookup); the `new URL` form was chosen because it carries no Parcel-specific syntax. `<Logo
+     src={logo} />` is unchanged. In the production build this resolves through Parcel's runtime bundle
+     manifest, so **no import map is required** and none is emitted.
+  2. **A pre-existing `class=` (not `className=`) in
+     [demo-site/GithubCorner.js](../../../../demo-site/GithubCorner.js) escalated from a harmless
+     warning into a full-page dev-server failure.** React has always rejected `class` on a DOM element,
+     so the three classes were never applied and `index.css`'s `.github-corner:hover .octo-arm`
+     octocat-wave animation has never once run. Under Parcel 1 this was a console line nobody saw;
+     Parcel 2's dev runtime ships the React error overlay, which promotes it to an opaque full-screen
+     `Error: Invalid DOM property 'class'` panel covering the entire served page — the app mounted and
+     worked underneath, but a maintainer running `start-site` sees only the overlay, which fails AC 3
+     in practice. Fixed all three occurrences to `className`, restoring the intended hover animation.
+     This is the only edit made to `GithubCorner.js`; Task 2's "needs no change" note remains true of
+     the React 19 / Emotion 11 migration itself, which is what it was scoped to.
+  **Verification, all four steps.** (1) `npm run build` regenerated `dist/`. (2) `npm run start-site`
+  served on `localhost:1234`; scripted Chrome typed `TECUITY 42` into the input (via the native value
+  setter so React's controlled input registers it) and clicked GO — the `Tape` receipt animates out of
+  the slot and the barcode renders as a 300×45 `data:image/svg+xml;base64` image. Emotion 11 is fully
+  functional: one `style[data-emotion]` tag with 35 rules, and the `css`/`keyframes` interpolation in
+  `Tape.js` resolves to a real named keyframes rule applied as `animation-name: animation-jzdcv9` on
+  `ReceiptPaper` — so the Developer Notes' prediction held exactly, no `@emotion/babel-plugin` or JSX
+  pragma needed. The `Digital` @font-face loads, `normalize.css` applies (`body` margin `0px`), the
+  perspective transform and gradients on `Row` compute correctly. Console, exceptions, failed requests:
+  **all empty** after the two fixes. Screenshot reviewed — the page is pixel-correct. (3)
+  `npm run build-site` completed clean in 896 ms with no errors. (4) `docs/` verified against AC 5 —
+  the three-step script worked: exactly **one** JS bundle (`demo-site.543c762d.js`, 285.05 kB) and
+  **one** CSS bundle (`demo-site.c0a2d9b0.css`), plus `index.html`, `digital.7e4dbc27.ttf`,
+  `logo.06ac5d38.svg` and `social.png` (restored by the copy step, byte-identical — git reports it
+  unmodified). Both React 16-era bundles (`demo-site.51f96e0f.js`, `demo-site.e9ff0f45.js`) and the old
+  css/font/logo assets are gone, deleted by the clean step. Each bundle also has its `.map` companion,
+  exactly as the pre-upgrade tree did. `docs/index.html`'s `<script>`/`<link>` hashes match the files on
+  disk. Rather than trust that, the committed `docs/` tree was **rendered as it will actually be served**:
+  Chrome was pointed at `https://tecuity.github.io/barcode-generator/index.html` with that origin
+  intercepted at the protocol layer and fulfilled from local `docs/` (read-only — `docs/` was not
+  modified or rewritten). It requested exactly the five expected files, none missing, and produced the
+  same working barcode, logo, fonts and animation with an empty console. Also confirmed on the built
+  bundle: **zero bare/externalized imports and no import map**, i.e. React and the barcode library are
+  genuinely bundled — the regression Task 4 fixed via `browserslist` has not returned. `npm run test:ci`
+  still **26 passed (26)**; no library file was touched, so `dist/` is unaffected.
 
 ---
 
