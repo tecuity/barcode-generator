@@ -101,3 +101,6 @@ dist
 .tern-port
 
 .DS_Store
+
+# Local Claude Code configuration
+.claude/settings.json
