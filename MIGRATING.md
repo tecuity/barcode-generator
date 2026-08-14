@@ -1,17 +1,24 @@
-# Migrating to @tecuity/barcode-generator 1.3.0
+# Migrating to @tecuity/barcode-generator 2.0.0
 
-This guide covers upgrading from **1.2.1** to **1.3.0**.
+This guide covers upgrading from **1.2.1** to **2.0.0**.
 
-1.3.0 modernizes the package's *module output and publish toolchain*. The generator logic is
+2.0.0 modernizes the package's *module output and publish toolchain*. The generator logic is
 unchanged and its output is byte-for-byte identical to 1.2.1 — see
 [Output parity](#output-parity-nothing-you-render-changes).
 
 **If you `require()` or `import` the package by its bare name and you are on Node 24, no code change
 is required.** The one change that can break you is the new Node floor.
 
+> **Why 2.0.0, and where 1.3.0 went.** These changes were briefly published as `1.3.0` on
+> 2026-08-14 and unpublished the same day. Raising `engines.node` from *absent* to `>=24.0.0` can
+> fail an install outright on some package managers, which is breaking behavior and does not belong
+> in a minor. Shipping it as a major means a `^1.2.x` range will not pick it up — the upgrade is
+> now something you opt into. `1.3.0` will never be republished; if you happened to install it,
+> move to `2.0.0`, which is identical code.
+
 ## What changed in the published package
 
-| | 1.2.1 | 1.3.0 |
+| | 1.2.1 | 2.0.0 |
 |---|---|---|
 | `engines.node` | *absent* | `>=24.0.0` — **can fail your install** |
 | `main` | `dist/index.js` (broken path; see below) | `index.cjs` |
@@ -34,20 +41,32 @@ This is the only change that can stop an install.
 "engines": { "node": ">=24.0.0" }
 ```
 
-This is deliberate and org-wide, not a build-toolchain artifact. It arrives in a minor version, so a
-`^1.2.x` range **will float you onto it automatically** on the next fresh resolve.
+This is deliberate and org-wide, not a build-toolchain artifact.
 
-| Your Node | Result |
+**Because it ships in a major, a `^1.2.x` range will not resolve to it.** `^1.2.1` means
+`>=1.2.1 <2.0.0`, so a fresh resolve still lands on 1.2.1 and nothing changes underneath you. You
+adopt 2.0.0 by changing the range deliberately. No pin is required to stay put.
+
+Ranges that *will* pull it in: `*`, `latest`, `>=1.2.1`, or any explicit `^2` / `2.x`. If you use
+one of those and are not on Node 24, tighten it before upgrading.
+
+What happens when a Node < 24 environment does resolve 2.0.0 depends on your package manager, and
+the spread is wider than it looks:
+
+| Package manager | Result on Node 20 / 22 |
 |---|---|
-| 24+ | Clean install |
-| 20 / 22 | `EBADENGINE` **warning**; install proceeds |
-| 20 / 22 with `engine-strict=true` or `npm ci --engine-strict` | Install **aborts** |
+| npm (default) | `EBADENGINE` **warning**; install proceeds |
+| npm with `engine-strict=true`, or `npm ci --engine-strict` | Install **aborts** |
+| Yarn Classic (v1) | Install **fails** — `The engine "node" is incompatible with this module` / `Found incompatible module`. Requires `--ignore-engines` to bypass |
+
+If you are on a package manager not listed, check its `engines` handling before upgrading rather
+than assuming npm's warn-and-continue behavior — it is not universal.
 
 **Sequencing matters.** If your project is also moving to Node 24, land the runtime bump *before*
 the barcode-generator bump. Upgrading this package first — while a Dockerfile, CI agent, or runtime
 manifest still pins an older Node — turns a passing install into a failing one.
 
-If you need to hold at 1.2.1 while the Node work lands, pin exactly and bump deliberately:
+If you want to hold at 1.2.1 explicitly rather than relying on the range, pin exactly:
 
 ```json
 "@tecuity/barcode-generator": "1.2.1"
@@ -95,13 +114,13 @@ published and were not published in 1.2.1 either — nothing that previously res
 
 1.2.1 declared `main: "dist/index.js"`, but its tarball contained only `index.js` at the package
 root — that path never resolved. `require()` worked solely because Node falls back to `index.js`
-when `main` is unresolvable. 1.3.0 fixes this. If you had worked around it with an explicit path,
+when `main` is unresolvable. 2.0.0 fixes this. If you had worked around it with an explicit path,
 drop the workaround.
 
 ## 3. `require()` returns the same thing — still no `.default`
 
 Both versions return the generator **function itself**, not a namespace object. 1.2.1's UMD wrapper
-did `module.exports = factory()`; 1.3.0's CJS build is emitted with Rollup's `exports: "default"`.
+did `module.exports = factory()`; 2.0.0's CJS build is emitted with Rollup's `exports: "default"`.
 Verified on the built bundle: `typeof require(...) === 'function'`, and `'default' in require(...)`
 is `false`.
 
@@ -113,7 +132,7 @@ generateBarcode('1234567')        // ✓ unchanged
 Do **not** add `.default` when upgrading:
 
 ```js
-require('@tecuity/barcode-generator').default   // ✗ undefined in both 1.2.1 and 1.3.0
+require('@tecuity/barcode-generator').default   // ✗ undefined in both 1.2.1 and 2.0.0
 ```
 
 ## 4. UMD global renamed
@@ -121,7 +140,7 @@ require('@tecuity/barcode-generator').default   // ✗ undefined in both 1.2.1 a
 Only relevant if you load the bundle via a `<script>` tag.
 
 1.2.1's build set the UMD name to the string `"index.js"`, which Rollup split on the dot into a
-nested namespace — the global was `window.index.js`. 1.3.0 uses a valid identifier:
+nested namespace — the global was `window.index.js`. 2.0.0 uses a valid identifier:
 
 ```html
 <script src=".../index.umd.js"></script>
@@ -133,7 +152,7 @@ nested namespace — the global was `window.index.js`. 1.3.0 uses a valid identi
 
 ## 5. Base64 encoding no longer uses `Buffer`
 
-1.2.1 encoded via `Buffer.from(svg).toString("base64")`. 1.3.0 uses `TextEncoder` + `btoa`.
+1.2.1 encoded via `Buffer.from(svg).toString("base64")`. 2.0.0 uses `TextEncoder` + `btoa`.
 
 **Why:** `Buffer` is a Node-only global. In the browser it worked only under bundlers that
 auto-injected a polyfill (Parcel 1 did; Vite and Parcel 2 do not), so the package could not be
@@ -148,6 +167,11 @@ so it is worth a smoke test rather than an assumption. Both globals are availabl
 Node v24.16.0: the built CJS bundle produces correct output and emits **no deprecation warning**,
 including under `--throw-deprecation --pending-deprecation`. (Node's docs deprecate the
 `buffer.btoa()` *module export* in favor of `Buffer.from`; the global used here is unaffected.)
+
+Note that `btoa` as a global requires Node 16 or newer, where 1.2.1's `Buffer.from` ran on any Node
+version. This is academic if you respect `engines.node` — but if you bypass the engine check on an
+older runtime, the failure moves from install time to call time as a
+`ReferenceError: btoa is not defined`. Do not bypass the floor.
 
 If your usage is server-side, exercise it in the environment you actually deploy — a container or
 process manager, not just local dev.
@@ -170,7 +194,7 @@ input, lowercase, hyphens, spaces, embedded `*`, unmapped characters, and non-de
 `dist/index.cjs` and `dist/index.mjs` — the level a toolchain change could actually break.
 
 **If you gate releases on rendered-output parity** (PDF diffs, image snapshots, visual regression),
-this matters: the barcodes 1.3.0 produces are byte-identical to 1.2.1's, so any diff you observe
+this matters: the barcodes 2.0.0 produces are byte-identical to 1.2.1's, so any diff you observe
 across the upgrade did **not** originate here. Rule this library out and look at the rest of the
 change set.
 
@@ -193,9 +217,11 @@ on your data is cheap.
 
 - [ ] Every environment that installs this package runs Node 24 or newer — local, CI agents,
       container base images, and any build/publish step.
-- [ ] Every manifest declaring the dependency is accounted for, including container and
-      per-environment manifests and any lockfile in a subdirectory.
 - [ ] Node 24 lands **before** the version bump if both are in flight.
+- [ ] The dependency range was changed deliberately to `^2` — a `^1.2.x` range holds you on 1.2.1.
+- [ ] No loose range (`*`, `latest`, `>=1.2.1`) pulls 2.0.0 into a Node < 24 environment unnoticed.
+- [ ] Your package manager's `engines` behavior is understood — Yarn Classic **fails** where npm
+      only warns.
 - [ ] No path-based import of the package remains — grep for `barcode-generator/`.
 - [ ] No `.default` was added to a `require()` of this package.
 - [ ] Any `<script>`-tag usage reads `barcodeGenerator`, not `index.js`.

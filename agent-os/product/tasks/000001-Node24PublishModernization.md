@@ -70,9 +70,10 @@ bundlers are expected to work via the same `exports` map but are **not** tested 
    generator output; the suite passes on Node 24.
 8. Unused / duplicate devDependencies that belong to the library toolchain are removed; the
    remaining library `devDependencies` are on supported majors.
-9. A new version (proposed `1.3.0`) is published to npm from a Node 24 environment. Verified by:
-   `npm view @tecuity/barcode-generator version` prints `1.3.0`; and after a clean install of
-   `@tecuity/barcode-generator@1.3.0` in the React 19 sandbox, `generateBarcode('1234567')` returns a
+9. A new version (**`2.0.0`** — revised from the originally proposed `1.3.0`; see the Developer Notes
+   entry "Version bump is a major") is published to npm from a Node 24 environment. Verified by:
+   `npm view @tecuity/barcode-generator version` prints `2.0.0`; and after a clean install of
+   `@tecuity/barcode-generator@2.0.0` in the React 19 sandbox, `generateBarcode('1234567')` returns a
    string starting with `data:image/svg+xml;base64,` and the `<img>` displays visible barcode bars.
 10. The repo is standardized on **npm**: a `package-lock.json` is generated and committed, `yarn.lock`
     is removed, and `npm ci` installs cleanly on Node 24 (so `np` and 000003's CI both use npm).
@@ -161,9 +162,30 @@ config, and runs cleanly on Node 24 — the right fit here. (Jest 29 is the org 
 `granite-ui`, but that repo has jsdom/React component tests this one does not. The divergence is
 intentional; document it in Task 11 History.)
 
-**Version bump is a minor.** Adding ESM + `exports` while keeping the existing `main` working is
-additive and backward-compatible — publish `1.3.0`, not a major. If a later decision drops the UMD
-`main` entirely, that would be a breaking `2.0.0`; do not do that in this task.
+**Version bump is a major — publish `2.0.0`.** *(Revised 2026-08-14. This note previously specified a
+minor, `1.3.0`, on the reasoning that adding ESM + `exports` while keeping `main` working is additive
+and backward-compatible. That reasoning was sound for the module-output changes but did not account
+for the `engines.node` floor, and it was written before the downstream consumer had been examined.)*
+
+The floor added by Task 2 raises `engines.node` from *absent* to `>=24.0.0`, which is breaking
+behavior, not a warning, on some package managers. The decisive evidence came from the only known
+consumer, `tecuity-reports`: it declares `"@tecuity/barcode-generator": "^1.2.1"` and uses a
+**Yarn Classic (v1)** lockfile. Yarn 1 treats an `engines` mismatch as a hard error
+(`Found incompatible module`, non-zero exit, bypassable only with `--ignore-engines`), where npm
+merely emits an `EBADENGINE` warning. So a minor would have floated that repo — and any other
+`^1.2.x` consumer — onto a version that fails their install outright on Node < 24.
+
+Publishing as `2.0.0` puts the break behind a semver boundary: `^1.2.1` resolves to `>=1.2.1 <2.0.0`,
+so existing consumers hold at 1.2.1 automatically with no pin and no per-branch edits. Three further
+breaking vectors reinforce the call — the `exports` map blocks previously-legal subpath imports,
+`index.js` no longer exists in the tarball, and the UMD global was renamed from `window.index.js` to
+`window.barcodeGenerator`.
+
+The UMD build is **kept**, so the specific scenario this note originally reserved `2.0.0` for
+(dropping the UMD `main`) is not what triggered the major.
+
+**`1.3.0` was published and then unpublished — do not reuse that number.** See Task 18's History for
+the sequence. npm permanently burns an unpublished version, so `1.3.0` can never be republished.
 
 **`np.tests` must flip once real tests exist.** Today `np.tests: false` skips testing on release
 (there were no tests). After Phase 3, set `np` to run `test:ci` so releases are gated on a green
@@ -936,7 +958,7 @@ symlink).
    cd dist
    npm pack          # → tecuity-barcode-generator-1.2.1.tgz
    ```
-   The version is still `1.2.1` at this point — the bump to `1.3.0` does not happen until Task 18.
+   The version is still `1.2.1` at this point — the bump to `2.0.0` does not happen until Task 18.
 2. In a scratch Vite + React 19 app: `npm install /path/to/tecuity-barcode-generator-1.2.1.tgz`.
 3. ESM check — in a component:
    ```jsx
@@ -1004,8 +1026,9 @@ and note it here).
     value (3126 chars both). Task 16 proved parity for the built bundles in-repo; this proves it survives
     pack → install → Vite's dep-optimizer/esbuild → browser. Nothing in the publish path alters output.
   - **AC 9's post-publish sandbox re-check is deliberately not done here** — it requires the real
-    published `1.3.0`, which is Task 18. The sandbox app is left in the session scratchpad for Task 18 to
-    reuse, as that task directs.
+    published package, which is Task 18. The sandbox app is left in the session scratchpad for Task 18
+    to reuse, as that task directs. *(Updated 2026-08-14: the version to re-check is now `2.0.0`, not
+    the `1.3.0` originally named here — see Task 18's History.)*
 
 ---
 
@@ -1609,29 +1632,37 @@ inside the tarball). Fix any path mismatch back in Task 8.
 
 ---
 
-## Task 18: [ ] Publish 1.3.0
+## Task 18: [ ] Publish 2.0.0
 
 **Task:** With everything green on Node 24, cut the release. **Preconditions:** the preparation
 branch has been merged to `master` and you are releasing from `master`; `nvm use 24` is active; and
 `npm login` (with `@tecuity` publish rights) has been completed — an OTP prompt is expected. `np`
 handles the version bump, git tag, and publish; `np.testScript` (Task 12) gates on `test:ci`.
 
+**The bump is `major`, not `minor`** — see the Developer Notes entry "Version bump is a major".
+
 ```
-npm run release:preview -- minor   # dry run: confirm the plan and that it will run test:ci
-npm run release -- minor           # 1.2.1 → 1.3.0
+npm run release:preview -- major   # dry run: confirm the plan and that it will run test:ci
+npm run release -- major           # → 2.0.0
 ```
 
-Both use the Task 14.5 scripts, which invoke the `np` version pinned in the lockfile. If `np`'s
-interactive prompts are undesirable in the environment, use `npm version minor` +
+`package.json` currently reads `1.3.0` (left behind by the unpublished release below), so
+`npm version major` produces `2.0.0` from it. That is the intended result — do **not** hand-reset the
+version to `1.2.1` first, and do not force-push master to remove the 1.3.0 version-bump commit; it is
+already pushed and is an accurate record of what happened.
+
+Both commands use the Task 14.5 scripts, which invoke the `np` version pinned in the lockfile. If
+`np`'s interactive prompts are undesirable in the environment, use `npm version major` +
 `npm publish` from `dist/` as a fallback (ensuring `postversion` copied `package.json` into `dist/`).
 If a release must be cut from a non-default branch for any reason, `np` requires `--any-branch`;
 otherwise it refuses to publish off `master`. After publishing:
 
 ```
-npm view @tecuity/barcode-generator version   # → 1.3.0
+npm view @tecuity/barcode-generator version    # → 2.0.0
+npm view @tecuity/barcode-generator versions   # → no 1.3.0 in the list
 ```
 
-Then install `@tecuity/barcode-generator@1.3.0` fresh in the React 19 sandbox from Task 10 and
+Then install `@tecuity/barcode-generator@2.0.0` fresh in the React 19 sandbox from Task 10 and
 confirm it resolves and renders — this validates the real published artifact, not a local build.
 
 **Files:**
@@ -1640,6 +1671,37 @@ confirm it resolves and renders — this validates the real published artifact, 
 **Acceptance Criteria:** AC 9
 
 **History:**
+- 2026-08-14 — **`1.3.0` published, then unpublished the same day. Superseded by `2.0.0`; the number
+  `1.3.0` is permanently burned and must never be reused.** Sequence:
+  1. `npm run release:preview -- minor` passed its prerequisite and Git checks on `master` with a
+     clean tree, and `npm run release -- minor` published `1.3.0` at `2026-08-14T21:13:40Z`, pushing
+     a `v1.3.0` tag and opening a GitHub release draft.
+  2. **Defect found after publishing, during a consumer-impact review.** The `engines.node`
+     `>=24.0.0` floor is not warn-only across package managers, which is what the minor decision had
+     assumed. The only known consumer, `tecuity-reports`, declares `"^1.2.1"` against a **Yarn
+     Classic (v1)** lockfile, and Yarn 1 treats an `engines` mismatch as a hard error
+     (`Found incompatible module`) rather than npm's `EBADENGINE` warning. A minor would therefore
+     have floated that repo onto a version that fails its install outright on Node < 24 — silently,
+     on whatever future date something regenerated its lockfile. Full rationale in the Developer
+     Notes.
+  3. `npm unpublish @tecuity/barcode-generator@1.3.0` — run well inside npm's 72-hour window (~8
+     hours after publish, with effectively no adoption). Verified: `npm view … versions` now ends at
+     `1.2.1`, `npm view … version` reports `1.2.1`, and `npm view …@1.3.0` returns **404**.
+  4. `git tag -d v1.3.0` and `git push origin :refs/tags/v1.3.0`. Deleting the tag was **not** merely
+     cosmetic — `np` derives its changelog from the most recent tag, so leaving `v1.3.0` in place
+     would have scoped the 2.0.0 release notes to the handful of commits after it. With the tag gone
+     the base falls back to `v1.2.1` and 2.0.0 carries the full modernization changelog.
+  5. `MIGRATING.md` rewritten for 2.0.0. This was not a find-and-replace: the guide previously told
+     readers the floor "arrives in a minor version, so a `^1.2.x` range **will float you onto it
+     automatically**" — which inverts under a major. It now states that `^1.2.x` holds at 1.2.1, adds
+     a per-package-manager table covering the Yarn Classic hard-failure, notes that `btoa` requires
+     Node ≥16 if the engine check is bypassed, and records where `1.3.0` went.
+  - **Not yet done:** the 2.0.0 publish itself and its post-publish verification. Alternatives
+    weighed and rejected before unpublishing: deprecating `1.3.0` instead (rejected — deprecated
+    versions still satisfy `^1.2.x`, so the float hazard would have remained), and leaving it in
+    place with a pin in `tecuity-reports` (rejected — the pin would have to be replicated across
+    several branches of that repo and kept in sync, where a major achieves the same protection with
+    no consumer edits at all).
 
 ---
 
