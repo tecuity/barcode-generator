@@ -1,6 +1,6 @@
 # 000001-Node24PublishModernization - Tasks
 
-## Braden Steiner - Last Modified: 2026-08-13
+## Braden Steiner - Last Modified: 2026-08-14
 
 ## Story Description
 
@@ -920,7 +920,7 @@ rule in the Developer Notes.
 
 ---
 
-## Task 10: [ ] Verify consumption in a React 19 sandbox (ESM and CJS)
+## Task 10: [x] Verify consumption in a React 19 sandbox (ESM and CJS)
 
 **Task:** Prove the published shape works for a React 19 consumer. Build the package
 (`npm run build`), then create a throwaway sandbox **outside** this repo and install the local build
@@ -957,6 +957,55 @@ and note it here).
 **Acceptance Criteria:** AC 6
 
 **History:**
+- 2026-08-14 — Completed. **All five steps pass; no defect surfaced, so no code was changed.** Run on
+  Node **v24.16.0** / npm 11.13.0 against a throwaway sandbox created **outside** the repo (in the
+  session scratchpad), installed from a real tarball rather than a symlink.
+  - **Step 1 — packed from `dist/`, not the repo root**, as the task requires. Ran `npm run build`, then
+    the `copyFileSync` manifest stage, then `npm pack ./dist --pack-destination <scratchpad>`. *Minor
+    deviation:* used `npm pack ./dist --pack-destination …` instead of `cd dist; npm pack` — same package
+    root and same `files` handling (this is the form Task 14.5 already researched), but it needs no shell
+    `cd` and leaves no `.tgz` inside the repo. Tarball listed exactly the five publish-root entries —
+    `index.cjs`, `index.d.ts`, `index.mjs`, `index.umd.js`, `package.json` (11.2 kB packed / 167.5 kB
+    unpacked). Version was still `1.2.1`, as the task notes it should be at this point.
+  - **Step 2 — sandbox install.** Scratch Vite + React 19 app, then `npm install <tarball>`: resolved
+    `react@19.2.8`, `react-dom@19.2.8`, `vite@8.2.1`, `@tecuity/barcode-generator@1.2.1`. **0
+    vulnerabilities, no `EBADENGINE`** (the sandbox is on Node 24, so the `>=24.0.0` floor is satisfied).
+    Confirmed `node_modules/@tecuity/barcode-generator` is a real extracted directory (not a symlink)
+    holding exactly the five published files — so this exercised the real `files`/`exports` shape.
+  - **Step 3 — ESM check, verified in a real browser, not just by bundling.** `import generateBarcode
+    from '@tecuity/barcode-generator'` in a component; `vite build` transformed 16 modules with no
+    warnings. Then served the build and drove **headless Chrome** against it. The DOM reported
+    `generate-error: none`, `prefix-ok: true`, `src-length: 3126`, and
+    `img-status: loaded naturalWidth=300 naturalHeight=60` — i.e. the `<img>` `onLoad` fired and Chrome
+    derived the intrinsic size from the SVG `viewBox`, which it can only do if it actually parsed the
+    data URL. A screenshot confirms **visible barcode bars**. This is the check Task 9.5 was a
+    prerequisite for and it is now positively confirmed, two ways: the built browser bundle contains
+    **zero** `Buffer` references (one `btoa`, one `TextEncoder`), and no
+    `ReferenceError: Buffer is not defined` was thrown at runtime.
+  - **Step 4 — CJS check.** `const g = require('@tecuity/barcode-generator')` from a `.cjs` script:
+    `typeof g` is **`function`**, which independently re-confirms Task 5's `exports: "default"` is in
+    effect from the installed package (a namespace object would have failed here). `g('ABC', {raw:true})`
+    returned raw SVG starting `<svg`, containing `viewBox`, with **5** glyphs and a leading
+    `<title>*</title>` — the Code 39 guard wrapping `*ABC*`. `g('1234567')` returned a
+    `data:image/svg+xml;base64,` URL. Both halves of AC 6 are therefore green.
+  - **Step 5 — TypeScript check, made falsifiable rather than eyeballed in an editor.** `tsc 5.9.3`,
+    `strict`, `moduleResolution: bundler`. `--traceResolution` shows the specifier resolving to
+    `node_modules/@tecuity/barcode-generator/index.d.ts` with Package ID
+    `@tecuity/barcode-generator/index.d.ts@1.2.1` — so Task 8's publish-root `types` path resolves for
+    real (AC 5 confirmed from the consumer side). A positive file importing both `generateBarcode` and
+    `BarcodeOptions` type-checks clean **and** carries an `IsAny` assertion, so it would fail if the
+    declaration had silently fallen back to `any`. A negative file confirms the types are genuinely
+    enforced: all three bad usages error as expected (`spacing: "10"` → TS2322, `number` return → TS2322,
+    `generateBarcode(123)` → TS2345).
+  - **Extra check beyond the task's list, worth recording because it closes AC 11 at the consumer level.**
+    All **16** Task 1.5 fixture cases reproduce byte-for-byte from the *installed tarball* through both
+    entry points (`installed-tarball cjs parity OK 16`, `installed-tarball mjs parity OK 16`), and the
+    data URL the **browser** actually rendered is `-ceq` identical to the fixture's `["1234567",{}]`
+    value (3126 chars both). Task 16 proved parity for the built bundles in-repo; this proves it survives
+    pack → install → Vite's dep-optimizer/esbuild → browser. Nothing in the publish path alters output.
+  - **AC 9's post-publish sandbox re-check is deliberately not done here** — it requires the real
+    published `1.3.0`, which is Task 18. The sandbox app is left in the session scratchpad for Task 18 to
+    reuse, as that task directs.
 
 ---
 
