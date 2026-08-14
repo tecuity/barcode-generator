@@ -1,52 +1,69 @@
 {
   "name": "@tecuity/barcode-generator",
   "version": "1.2.1",
-  "main": "dist/index.js",
+  "main": "index.cjs",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs",
+      "default": "./index.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.umd.js",
+    "index.d.ts"
+  ],
   "license": "MIT",
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/tecuity/barcode-generator"
   },
   "homepage": "https://tecuity.github.io/barcode-generator/",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "build": "node process.js && node build.js",
-    "start-site": "parcel demo-site/index.html --out-dir site-dist",
-    "build-site": "parcel build demo-site/index.html --out-dir docs --public-url https://tecuity.github.io/barcode-generator/",
-    "postversion": "cp -f package.json dist",
-    "release": "npx np"
+    "start-site": "vite",
+    "build-site": "vite build",
+    "pretest": "npm run build",
+    "test": "vitest run",
+    "pretest:ci": "npm run build",
+    "test:ci": "vitest run",
+    "copy-manifest": "node -e \"require('node:fs').copyFileSync('package.json','dist/package.json')\"",
+    "postversion": "npm run build && npm run copy-manifest",
+    "pack:preview": "npm run build && npm run copy-manifest && npm pack ./dist --dry-run",
+    "release:preview": "np --preview",
+    "release": "np"
   },
   "publishConfig": {
     "access": "public"
   },
   "np": {
     "contents": "dist",
-    "tests": false
+    "testScript": "test:ci"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
-    "@emotion/core": "^10.0.27",
-    "@emotion/styled": "^10.0.27",
-    "@rollup/plugin-json": "^4.0.2",
-    "@typescript-eslint/eslint-plugin": "2.x",
-    "@typescript-eslint/parser": "2.x",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@rollup/plugin-babel": "^7.1.0",
+    "@rollup/plugin-json": "^6.1.0",
+    "@vitejs/plugin-react": "^6.0.5",
     "all-contributors-cli": "^6.13.0",
-    "babel-eslint": "10.x",
-    "chalk": "^3.0.0",
-    "eslint": "6.x",
-    "eslint-config-react-app": "^5.2.0",
-    "eslint-plugin-flowtype": "3.x",
-    "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "1.x",
     "normalize.css": "^8.0.1",
-    "parcel": "^2.0.0-beta.1",
-    "parcel-bundler": "^1.12.4",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "rollup": "^1.31.0",
-    "rollup-plugin-babel": "^4.3.3"
+    "np": "^12.0.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "rollup": "^4.62.4",
+    "vite": "^8.2.1",
+    "vitest": "^4.1.10"
   }
 }

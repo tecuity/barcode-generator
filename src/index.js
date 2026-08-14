@@ -1,8 +1,11 @@
-import characterMap from "./svgMap.json";
+import characterMap from "../svgMap.json";
 const SPACING = 5;
 
 const svgToDataURL = svg => {
-  const encoded = Buffer.from(svg).toString("base64");
+  const bytes = new TextEncoder().encode(svg);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  const encoded = btoa(bin);
   const header = "data:image/svg+xml;base64,";
 
   return header + encoded;

@@ -19,15 +19,15 @@ View a demo [here](https://tecuity.github.io/barcode-generator/)
 
 ## Installation
 
+Requires **Node 24 or newer** (`engines.node: ">=24.0.0"`). Consumers on Node 20/22 will see an
+`EBADENGINE` warning on install.
+
 ```bash
 npm install @tecuity/barcode-generator
 ```
 
-or
-
-```bash
-yarn add @tecuity/barcode-generator
-```
+Upgrading from 1.2.1? See [MIGRATING.md](MIGRATING.md) — the entry points, the UMD global, and the
+Node floor all changed.
 
 ## Usage
 
@@ -37,6 +37,25 @@ For a default usage, just import and call the generator with a string like this:
 import generateBarcode from '@tecuity/barcode-generator'
 
 const barcode = generateBarcode("1234567")
+```
+
+The package also ships a CommonJS build, so `require` works too — and it returns the generator
+function directly, not a namespace object (there is no `.default` to unwrap):
+
+```js
+const generateBarcode = require('@tecuity/barcode-generator')
+
+const barcode = generateBarcode("1234567")
+```
+
+There's a UMD build at `index.umd.js` as well, for loading straight from a `<script>` tag. It exposes
+the generator as the global `barcodeGenerator`:
+
+```html
+<script src="https://unpkg.com/@tecuity/barcode-generator/index.umd.js"></script>
+<script>
+  const barcode = barcodeGenerator("1234567")
+</script>
 ```
 
 And that's it! By default the generator will return a barcode as a base64-encoded
@@ -58,6 +77,34 @@ const barcode = generateBarcode("1234567", {raw: true, spacing: 10})
 | spacing | int \|\| float | 5       | The spacing between characters, relative to the `viewBox` of the resulting SVG. |
 | raw     | boolean        | false   | Returns the barcode as a raw SVG string rather than a base64 data-url.          |
 | height  | int \|\| float | 172.89  | The `viewBox` height of the resulting SVG.                                      |
+
+### TypeScript
+
+The package ships a hand-written `index.d.ts` alongside the build, so the default export and its
+options object are typed out of the box. There is no `@types/` package to install.
+
+## Development
+
+Requires Node 24 (`nvm use 24` — see `.nvmrc`), then `npm install`.
+
+| Command | Description |
+|---------|-------------|
+| `npm run build` | Regenerates the SVG character map and bundles `dist/` (ESM + CJS + UMD + types). |
+| `npm test` | Single-pass run of the Vitest suite. Watch mode is `npx vitest`. |
+| `npm run test:ci` | Single-pass test run, used by CI and gated on before every release. |
+| `npm run start-site` | Serves the demo-site at `http://localhost:5173`. Run `npm run build` first — the site imports `dist/`. |
+| `npm run build-site` | Rebuilds the `docs/` GitHub Pages bundle. |
+
+### Releasing
+
+| Command | Description |
+|---------|-------------|
+| `npm run pack:preview` | Shows exactly what the published tarball will contain. Writes no tarball. |
+| `npm run release:preview` | Dry run of the release — prints the steps without publishing. |
+| `npm run release -- minor` | Cuts the release (version bump, git tag, publish). Accepts any `np` bump argument. |
+
+Releases run from `master` on Node 24 and are gated on `test:ci`. `dist/` is gitignored, so the
+release flow rebuilds it automatically via the `postversion` hook.
 
 ## Contributors ✨
 
