@@ -1632,7 +1632,7 @@ inside the tarball). Fix any path mismatch back in Task 8.
 
 ---
 
-## Task 18: [ ] Publish 2.0.0
+## Task 18: [x] Publish 2.0.0
 
 **Task:** With everything green on Node 24, cut the release. **Preconditions:** the preparation
 branch has been merged to `master` and you are releasing from `master`; `nvm use 24` is active; and
@@ -1671,6 +1671,41 @@ confirm it resolves and renders — this validates the real published artifact, 
 **Acceptance Criteria:** AC 9
 
 **History:**
+- 2026-08-14 — **Completed. `2.0.0` published to npm.** `npm run release -- major` bumped `1.3.0` →
+  `2.0.0` as expected (no hand-editing of the version was needed), with `np.testScript` gating on
+  `test:ci`. Registry state confirmed: `npm view … version` → **`2.0.0`**, and `npm view … versions`
+  lists `1.0.1 … 1.2.0, 1.2.1, 2.0.0` — **no `1.3.0`**, so the unpublish and the major landed
+  consistently.
+
+  **AC 9 verified against the real published artifact**, not a local build — a clean
+  `npm install @tecuity/barcode-generator@2.0.0` into a throwaway package outside this repo
+  (0 vulnerabilities, 1 package added):
+  - **Tarball contents** — exactly the five expected entries: `index.cjs`, `index.d.ts`, `index.mjs`,
+    `index.umd.js`, `package.json`.
+  - **Manifest** — `version: 2.0.0`, `engines: {"node":">=24.0.0"}`, and **`dependencies: null`**,
+    confirming the zero-runtime-dependency rule survived the release.
+  - **CJS** — `require('@tecuity/barcode-generator')` returns `typeof 'function'` with
+    `'default' in g === false`, and `g('1234567')` returns a `data:image/svg+xml;base64,…` string.
+    Task 5's `exports: "default"` is therefore in effect in the published bundle.
+  - **ESM** — `import g from '@tecuity/barcode-generator'` resolves through the `import` condition to
+    `index.mjs` and returns the same function and the same data URL.
+  - **Output parity from the published package** — all **16/16** Task 1.5 fixture cases reproduce
+    **byte-identically** to 1.2.1. This is the strongest form of the AC 11 check: the fixture was
+    captured from the published 1.2.1 tarball and is now re-verified against the published 2.0.0
+    tarball, so the entire modernization is provably non-functional end to end.
+  - **Still outstanding:** the browser half of AC 6/AC 9 — rendering the returned data URL in an
+    `<img>` inside a React 19 + Vite app against the *published* 2.0.0. Task 10 proved this for a
+    locally packed build; the published artifact is byte-identical to it, so this is a formality
+    rather than an open risk.
+
+  **Incidental finding, not a defect — candidate for a future patch.** The `exports` map declares only
+  `"."`, so `require('@tecuity/barcode-generator/package.json')` fails with
+  `ERR_PACKAGE_PATH_NOT_EXPORTED`. This is the documented intent (MIGRATING.md §2 states subpath
+  imports are blocked) and it is what blocks the deep-import paths the migration guide calls out. It is
+  worth knowing that some tooling reads a dependency's `package.json` directly for version detection;
+  the conventional fix is to add `"./package.json": "./package.json"` to the `exports` map. Not done
+  here — it is additive and belongs in a `2.0.1`/`2.1.0` if anything downstream actually needs it, not
+  in a re-cut of this release.
 - 2026-08-14 — **`1.3.0` published, then unpublished the same day. Superseded by `2.0.0`; the number
   `1.3.0` is permanently burned and must never be reused.** Sequence:
   1. `npm run release:preview -- minor` passed its prerequisite and Git checks on `master` with a
